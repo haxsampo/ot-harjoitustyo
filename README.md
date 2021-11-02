@@ -9,3 +9,6 @@
 [komentorivi.txt](https://github.com/haxsampo/ot-harjoitustyo/blob/master/laskarit/viikko1/komentorivi.txt)
 
 ## Harjoitustyö
+
+
+epäsynkroninaiheuttaja1
