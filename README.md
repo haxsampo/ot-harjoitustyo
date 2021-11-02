@@ -2,5 +2,6 @@
 
 ## Laskarit
 	**Miltä tab näyttää markdownissa**
+**Ilmeisesti tabaaminen estää boldaamisen**
 
 ## Harjoitustyö
