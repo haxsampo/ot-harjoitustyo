@@ -1,0 +1,7 @@
+Minkälainen kenttä ja miten se generoidaan/piirretään?
+
+Miten liikutetaan ukkoja
+	-jos halutaan jatkossa antaa reitinetsintäoptioita niin onko jotain helpompia tai vaikeampia tapoja?
+
+	-> Jos kenttä on soluista rakennettu niin, että ukot liikkuu yhden solun kokoisilla reiteillä (pääilmansuuntiin),
+	mutta tornit voi olla isompia kuin yksittäiset solut, ja potentiaalisesti monimuotoisia
