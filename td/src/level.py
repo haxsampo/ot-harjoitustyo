@@ -1,5 +1,5 @@
 import pygame
-from enemy import Enemy
+from sprites.enemy import Enemy
 
 
 class Level:
