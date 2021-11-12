@@ -6,3 +6,5 @@
 | 	| 1    | dokumentaation kanssa plärääminen |
 | 10/11 | 2    | pygameen tutustumista |
 |       | 2    | implementaation aloittelua |
+| 11/11 | 2.459| jotain levelirakennuskamaa |
+|12/11  | 1    | projektiili toimii jotenkin |
