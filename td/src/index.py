@@ -3,14 +3,14 @@ from gameloop import GameLoop
 from clock import Clock
 from renderer import Renderer
 from sprites.enemy import Enemy
-from sprites.tower import Tower
 from sprites.projectile import Projectile
+from sprites.tower import Tower
 from level import Level
-
 
 pygame.init()
 
 def main():
+    #alpha = (255,255,255)
     SCREEN_WIDTH = 800
     SCREEN_HEIGHT = 600
     OPP_UNIT_SIZE = 50
@@ -19,13 +19,12 @@ def main():
     pygame.display.flip()
     clock = Clock()
     level = Level()
-    gandalf = Enemy(100,100, "gandalf.png", 2)
-    tower = Tower(500,500,"tower.png")
+    gandalf = Enemy(50,300, "gandalf.png", 2)
+    tower = Tower(500,500,"tower.png", 50, 50, 250, 1000,level)
     level.enemies.add(gandalf)
     level.towers.add(tower)
-    #(self, pos_x, pos_y, img_name, size_x=10, size_y=10, target):
-    projectile = Projectile(450,450,"projectile.png",10,10,gandalf, OPP_UNIT_SIZE)
-    level.projectiles.add(projectile)
+    #projectile = Projectile(450,450,"projectile.png",10,10,gandalf, OPP_UNIT_SIZE,1)
+    #level.projectiles.add(projectile)
 
     level._initialize_sprites()
     renderer = Renderer(screen,level)

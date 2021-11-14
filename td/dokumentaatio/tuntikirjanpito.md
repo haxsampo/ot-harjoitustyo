@@ -7,4 +7,5 @@
 | 10/11 | 2    | pygameen tutustumista |
 |       | 2    | implementaation aloittelua |
 | 11/11 | 2.459| jotain levelirakennuskamaa |
-|12/11  | 1    | projektiili toimii jotenkin |
+|12/11  | 2    | projektiili toimii jotenkin |
+|14/11  | 1.82 | torni ampuu projektiileja, vastustaja reagoi projektiileihin|
