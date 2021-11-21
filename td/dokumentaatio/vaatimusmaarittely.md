@@ -8,12 +8,12 @@ Alussa vain peruskäyttäjä joka pelaa peliä normaalisti
 Mahdollisesti testaaja, jolla voi kokeilla vapaammin peruskäyttäjälle ajan kanssa avautuvia asioita
 
 ## Perusversion suunnitellut toiminnallisuudet
-Käyttäjä voi aloittaa uuden pelin
-Käyttäjä voi muuttaa peliin liittyviä asetuksia
-Käyttäjä voi tarkistaa ainakin tämän pelisession aikana saadut pisteet
-Käyttäjä voi pelissä rakentaa torneja
-	-jotka ampuvat pelaajan suojattavaan kohteeseen juoksevia örkkejä
-Käyttäjä voi hävitä yhden pelikerran
+- Käyttäjä voi aloittaa uuden pelin
+- Käyttäjä voi muuttaa peliin liittyviä asetuksia
+- Käyttäjä voi tarkistaa ainakin tämän pelisession aikana saadut pisteet
+- Käyttäjä voi pelissä rakentaa torneja
+	- jotka ampuvat pelaajan suojattavaan kohteeseen juoksevia örkkejä
+- Käyttäjä voi hävitä yhden pelikerran
 
 
 ## Jatkokehitysideat
