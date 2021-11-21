@@ -10,10 +10,6 @@
 
 ## Harjoitustyö
 
-[Tuntikirjanpito](https://github.com/haxsampo/ot-harjoitustyo/blob/master/dokumentaatio/tuntikirjanpito.md)
-
-[Käyttöliittymäluonnos](https://github.com/haxsampo/ot-harjoitustyo/blob/master/dokumentaatio/kayttoliittymaluonnos.png)
-
-[Alustava vaatimusmäärittely](https://github.com/haxsampo/ot-harjoitustyo/blob/master/dokumentaatio/vaatimusm%C3%A4%C3%A4rittely.md)
-
-epäsynkroninaiheuttaja1
+- [Tuntikirjanpito](./dokumentaatio/tuntikirjanpito.md)
+- [Käyttöliittymäluonnos](./dokumentaatio/kayttoliittymaluonnos.png)
+- [Alustava vaatimusmäärittely](./dokumentaatio/vaatimusm%C3%A4%C3%A4rittely.md)
