@@ -10,7 +10,7 @@ class Level:
         self.all_sprites = pygame.sprite.Group()
 
     def update(self, current_time):
-        self.enemies.update()
+        self.enemies.update(self.towers)
         self.towers.update(self.enemies,current_time)
         self.projectiles.update()
 

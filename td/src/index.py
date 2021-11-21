@@ -20,9 +20,16 @@ def main():
     clock = Clock()
     level = Level()
     gandalf = Enemy(50,300, "gandalf.png", 2)
-    tower = Tower(500,500,"tower.png", 50, 50, 250, 1000,level)
+    tower = Tower(500,500,"tower.png", 50, 50, 250, 1000)
+
+    gandalf2 = Enemy(50,500,"gandalf.png",2)
+    tower2 = Tower(100,500,"tower.png",50,50,250,1000)
+    tower2.give_level(level)
+    tower.give_level(level)
     level.enemies.add(gandalf)
     level.towers.add(tower)
+    level.enemies.add(gandalf2)
+    level.towers.add(tower2)
     #projectile = Projectile(450,450,"projectile.png",10,10,gandalf, OPP_UNIT_SIZE,1)
     #level.projectiles.add(projectile)
 

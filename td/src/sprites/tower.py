@@ -5,7 +5,7 @@ from sprites.projectile import Projectile
 
 #shoot_cd in ms
 class Tower(pygame.sprite.Sprite):
-    def __init__(self,x,y, imgName, size_x,size_y, shoot_range, shoot_cd, level):
+    def __init__(self,x,y, imgName, size_x,size_y, shoot_range, shoot_cd):
         super().__init__()
         self.image = load_image(imgName)
         self.image.set_colorkey((255,255,255))
@@ -18,18 +18,18 @@ class Tower(pygame.sprite.Sprite):
         self.range = shoot_range
         self.last_shot_time = -10
         self.shoot_cd = shoot_cd
+
+    def give_level(self,level):
         self._level = level
 
     def update(self,enemies,current_time):
         self.check_for_enemies(enemies,current_time)
 
     def draw_range(self,surf):
-        #pygame.draw.circle(surf, (0,0,255),(self.rect.x,self.rect.y), 50,1)
         pygame.draw.circle(surf, (0,0,255), (self.rect.x, self.rect.y), self.range, 2)
 
     def check_for_enemies(self, enemies, current_time):
         for enemy in enemies:
-            #print(math.hypot(self.rect.x - enemy.rect.x, self.rect.y - enemy.rect.y))
             if math.hypot(self.rect.x - enemy.rect.x, self.rect.y - enemy.rect.y) < self.range:
                 self.shoot(current_time,enemy)
 

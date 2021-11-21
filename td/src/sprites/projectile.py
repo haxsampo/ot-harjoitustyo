@@ -28,8 +28,7 @@ class Projectile(pygame.sprite.Sprite):
         else:
             self.rect.y -= 1*self.speed
     
-    #If target is farther than enemy size/2 +10, ignore collisions.
-    #If closer, only care about hitting given target
+    #doesn't actually check collision, but range to target
     def collision_detection(self):
         if math.hypot(self.rect.x - self.target.rect.x, self.rect.y - self.target.rect.y) < (self.enemy_size/2):
             self.target.take_damage(self.dmg)
