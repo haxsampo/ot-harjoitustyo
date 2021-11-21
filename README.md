@@ -10,6 +10,6 @@
 
 ## Harjoitustyö
 
-- [Tuntikirjanpito](./dokumentaatio/tuntikirjanpito.md)
-- [Käyttöliittymäluonnos](./dokumentaatio/kayttoliittymaluonnos.png)
-- [Alustava vaatimusmäärittely](./dokumentaatio/vaatimusm%C3%A4%C3%A4rittely.md)
+- [Tuntikirjanpito](./td/dokumentaatio/tuntikirjanpito.md)
+- [Käyttöliittymäluonnos](./td/dokumentaatio/kayttoliittymaluonnos.png)
+- [Alustava vaatimusmäärittely](./td/dokumentaatio/vaatimusm%C3%A4%C3%A4rittely.md)
