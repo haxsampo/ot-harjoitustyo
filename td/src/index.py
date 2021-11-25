@@ -15,17 +15,15 @@ def main():
     SCREEN_HEIGHT = 600
     OPP_UNIT_SIZE = 50
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-    
+
     pygame.display.flip()
     clock = Clock()
     level = Level()
-    gandalf = Enemy(50,300, "gandalf.png", 2)
-    tower = Tower(500,500,"tower.png", 50, 50, 250, 1000)
+    gandalf = Enemy(50, 300, "gandalf.png", 2)
+    tower = Tower(500, 500, "tower.png", 50, 50, 250, 1000, level)
 
-    gandalf2 = Enemy(50,500,"gandalf.png",2)
-    tower2 = Tower(100,500,"tower.png",50,50,250,1000)
-    tower2.give_level(level)
-    tower.give_level(level)
+    gandalf2 = Enemy(50, 500, "gandalf.png", 2)
+    tower2 = Tower(100, 500, "tower.png", 50, 50, 250, 1000, level)
     level.enemies.add(gandalf)
     level.towers.add(tower)
     level.enemies.add(gandalf2)
@@ -34,8 +32,8 @@ def main():
     #level.projectiles.add(projectile)
 
     level._initialize_sprites()
-    renderer = Renderer(screen,level)
-    game_loop = GameLoop(clock,renderer,level)
+    renderer = Renderer(screen, level)
+    game_loop = GameLoop(clock, renderer, level)
     game_loop.start()
 
 if __name__ == "__main__":

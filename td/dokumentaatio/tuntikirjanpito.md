@@ -10,3 +10,5 @@
 |12/11  | 2    | projektiili toimii jotenkin |
 |14/11  | 1.82 | torni ampuu projektiileja, vastustaja reagoi projektiileihin|
 |21/11  | 3.33 | kolmosviikon coveraget, testit ja muut
+|25/11  | 2    | pylintin kanssa pelehtimistä
+
