@@ -7,6 +7,7 @@ from sprites.enemy import Enemy
 from sprites.tower import Tower
 from wave import Wave
 from level import Level
+from sprites.highlight import Highlight
 
 pygame.init() # pylint: disable=no-member
 
@@ -22,6 +23,9 @@ def main():
     clock = Clock()
     wave = Wave(1, 10, 2000, 50, 300)
     level = Level(wave)
+    highlight = Highlight(1, 1)
+    level.highlights.add(highlight)
+
     gandalf = Enemy(50, 300, "gandalf.png", 2)
     tower = Tower(500, 500, "tower.png", 50, 50, 250, 1000, level)
 

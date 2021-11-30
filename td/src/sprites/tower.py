@@ -3,12 +3,10 @@ import math
 from load_image import load_image
 from sprites.projectile import Projectile
 
-#shoot_cd in ms
-
-
 class Tower(pygame.sprite.Sprite):
     '''
     Args:
+    shoot_cd in ms
     '''
     def __init__(self, x, y, imgName, size_x, size_y, shoot_range, shoot_cd, level):
         super().__init__()

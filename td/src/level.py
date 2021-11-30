@@ -13,6 +13,7 @@ class Level:
         self.enemies = pygame.sprite.Group()
         self.towers = pygame.sprite.Group()
         self.projectiles = pygame.sprite.Group()
+        self.highlights = pygame.sprite.Group()
         self.all_sprites = pygame.sprite.Group()
 
     def update(self, current_time):
@@ -23,8 +24,8 @@ class Level:
         self.enemies.update(self.towers)
         self.towers.update(self.enemies, current_time)
         self.projectiles.update()
-        self.mouse_highlight()
         self.wave.update(current_time, self)
+        self.highlights.update()
 
     def _initialize_sprites(self):
         '''
@@ -33,6 +34,7 @@ class Level:
         self.all_sprites.add(self.projectiles)
         self.all_sprites.add(self.enemies)
         self.all_sprites.add(self.towers)
+        self.all_sprites.add(self.highlights)
 
     def towers_shoot(self):
         '''
@@ -41,16 +43,3 @@ class Level:
         for tower in self.towers:
             tower.check_for_enemies(self.enemies)
 
-    def mouse_highlight(self):
-        '''
-        Args:
-        '''
-        mpos = pygame.mouse.get_pos()
-        hl_ = load_image("tower.png")
-        hl_.set_colorkey((255, 255, 255))
-        surf = pygame.Surface((50, 50))
-        surf.blit(hl_, (mpos[0], mpos[1]))
-        rect = hl_.get_rect()
-        rect.x = mpos[0]
-        rect.y = mpos[1]
-        # blittaa backgroundiin

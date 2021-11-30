@@ -28,7 +28,6 @@ class Wave:
         if(current_time - self.last_spawn > self.cooldown):
             self.last_spawn = current_time
             if self.enemies_per_wave >= self.enemies_spawned:
-                print("kabum")
                 gandalf = Enemy(self.pos_x, self.pos_y, "gandalf.png", 2)
                 level.enemies.add(gandalf)
                 level._initialize_sprites() # pylint: disable=protected-access
