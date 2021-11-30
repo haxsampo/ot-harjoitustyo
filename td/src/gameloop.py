@@ -1,16 +1,20 @@
 import pygame
 
-from pygame.locals import (
-    K_UP,
-    K_DOWN,
-    K_LEFT,
-    K_RIGHT,
-    K_ESCAPE,
-    KEYDOWN,
-    QUIT,
+from pygame.locals import (# pylint: disable=no-name-in-module
+    K_UP, # pylint: disable=unused-import
+    K_DOWN, # pylint: disable=unused-import
+    K_LEFT, # pylint: disable=unused-import 
+    K_RIGHT, # pylint: disable=unused-import
+    K_ESCAPE, # pylint: disable=unused-import
+    KEYDOWN, # pylint: disable=unused-import
+    QUIT, # pylint: disable=unused-import
 )
 
+
 class GameLoop:
+    '''
+    Not-Empty
+    '''
     def __init__(self, clock, renderer, level):
         self._clock = clock
         self.running = False
@@ -18,6 +22,9 @@ class GameLoop:
         self._level = level
 
     def start(self):
+        '''
+        Args:
+        '''
         self.running = True
         while True:
             self._handle_events()
@@ -27,6 +34,9 @@ class GameLoop:
             self._level.update(current_time)
 
     def _handle_events(self):
+        '''
+        Args:
+        '''
         for event in pygame.event.get():
             if event.type == KEYDOWN:
                 if event.key == K_ESCAPE:
@@ -35,8 +45,5 @@ class GameLoop:
                 self.running = False
 
         if not self.running:
-            pygame.quit()
+            pygame.quit() # pylint: disable=no-member
             exit()
-
-
-        

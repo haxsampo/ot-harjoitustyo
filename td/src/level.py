@@ -7,7 +7,9 @@ class Level:
     '''
     Args:
     '''
-    def __init__(self):
+
+    def __init__(self, wave):
+        self.wave = wave
         self.enemies = pygame.sprite.Group()
         self.towers = pygame.sprite.Group()
         self.projectiles = pygame.sprite.Group()
@@ -22,6 +24,7 @@ class Level:
         self.towers.update(self.enemies, current_time)
         self.projectiles.update()
         self.mouse_highlight()
+        self.wave.update(current_time, self)
 
     def _initialize_sprites(self):
         '''
@@ -50,4 +53,4 @@ class Level:
         rect = hl_.get_rect()
         rect.x = mpos[0]
         rect.y = mpos[1]
-        #blittaa backgroundiin
+        # blittaa backgroundiin
