@@ -9,6 +9,7 @@ from pygame.locals import (# pylint: disable=no-name-in-module
     K_ESCAPE, # pylint: disable=unused-import
     KEYDOWN, # pylint: disable=unused-import
     QUIT, # pylint: disable=unused-import
+    MOUSEBUTTONDOWN
 )
 
 
@@ -42,6 +43,9 @@ class GameLoop:
             if event.type == KEYDOWN:
                 if event.key == K_ESCAPE:
                     self.running = False
+            elif event.type == MOUSEBUTTONDOWN:
+                event_x, event_y = event.pos
+                self.handle_mouse(event_x, event_y)
             elif event.type == QUIT:
                 self.running = False
 
@@ -49,13 +53,28 @@ class GameLoop:
             pygame.quit() # pylint: disable=no-member
             exit()
 
-    def mouse_test(self):
-        pos = pygame.mouse.get_pos()
-        y = pos[1]
-        x = pos[0]
-        x_round_down = x - (x % 5)
-        y_round_down = y - (y % 5)
-        tower = Tower(x_round_down, y_round_down, "tower.png", 5, 5, 250, 1000, self._level)
-        self._level.towers.add(tower)
-        #x_round_up = x + (5-(x % 5))
-        #y_round_up = y + (5-(y % 5))
+    def handle_mouse(self, event_x, event_y):
+        '''
+        Args:
+        '''
+        print("event pos:", event_x, event_y)
+        twr_x = int(event_x - (event_x % 5))
+        twr_y = int(event_y - (event_y % 5))
+        print(self._renderer._display.get_width(), self._renderer._display.get_height())
+        tmp_rect = pygame.Rect(1000, 1000, 50, 50)
+        #tsekkaa että samalla kohdalla ei oo tornia X
+        
+        twr_in_bounds = self._level.tower_in_bounds(event_x, event_y, tmp_rect)
+        if twr_in_bounds:
+            twr_fits = self._level.tower_fits(event_x, event_y, tmp_rect)
+            if twr_fits:
+                self._level.change_cells_to(event_x,event_y, tmp_rect, 1)
+                tower = Tower(twr_x, twr_y, "tower.png", 5, 5, 250, 1000, self._level)
+                self._level.towers.add(tower)
+                self._level._initialize_sprites()        
+            else:
+                print("tower doesn't fit :(")
+        else:
+            print("tower not in bounds :|")
+        #tsekkaa että torni tulee ruudulle xx
+        #merkkaa kohdalle torni¨XX

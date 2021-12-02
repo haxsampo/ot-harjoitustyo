@@ -11,4 +11,6 @@
 |14/11  | 1.82 | torni ampuu projektiileja, vastustaja reagoi projektiileihin|
 |21/11  | 3.33 | kolmosviikon coveraget, testit ja muut
 |25/11  | 2    | pylintin kanssa pelehtimistä
+|29/11  | 2    | byrokratiaa |
+|30/11  | 2    | wave kamaa, highlight kamaa |
 

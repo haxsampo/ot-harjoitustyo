@@ -13,6 +13,7 @@ class Tower(pygame.sprite.Sprite):
         self.image = load_image(imgName)
         self.image.set_colorkey((255, 255, 255))
         self.surf = pygame.Surface((size_x, size_y))
+        #self.surf = pygame.transform.scale(self.surf, (size_x,size_y))
         # self.surf.blit(self.image,(x-(size_x/2),y-(size_y/2)))
         self.surf.blit(self.image, (x, y))
         self.rect = self.image.get_rect()
@@ -56,7 +57,6 @@ class Tower(pygame.sprite.Sprite):
         current_time (int): milliseconds since pygame.init() was called
         '''
         if current_time - self.last_shot_time > self.shoot_cd:
-            print("paupau")
             self.last_shot_time = current_time
             new_pr = Projectile(self.rect.x, self.rect.y,
                                 "projectile.png", 10, 10, enemy, 50, 1)
