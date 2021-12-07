@@ -9,7 +9,8 @@ from pygame.locals import (# pylint: disable=no-name-in-module
     K_ESCAPE, # pylint: disable=unused-import
     KEYDOWN, # pylint: disable=unused-import
     QUIT, # pylint: disable=unused-import
-    MOUSEBUTTONDOWN
+    MOUSEBUTTONDOWN,
+    K_1
 )
 
 
@@ -17,11 +18,12 @@ class GameLoop:
     '''
     Not-Empty
     '''
-    def __init__(self, clock, renderer, level):
+    def __init__(self, clock, renderer, level, user_input):
         self._clock = clock
         self.running = False
         self._renderer = renderer
         self._level = level
+        self._user_input = user_input
 
     def start(self):
         '''
@@ -30,7 +32,7 @@ class GameLoop:
         self.running = True
         while True:
             self._handle_events()
-            self._renderer.render()
+            self._renderer.render(self._user_input)
             current_time = self._clock.get_ticks()
             self._clock.tick(60)
             self._level.update(current_time)
@@ -41,8 +43,7 @@ class GameLoop:
         '''
         for event in pygame.event.get():
             if event.type == KEYDOWN:
-                if event.key == K_ESCAPE:
-                    self.running = False
+                self._user_input.key_handler(event.key, self)
             elif event.type == MOUSEBUTTONDOWN:
                 event_x, event_y = event.pos
                 self.handle_mouse(event_x, event_y)
@@ -53,28 +54,33 @@ class GameLoop:
             pygame.quit() # pylint: disable=no-member
             exit()
 
+    #pura esim seuraaviin: rakennustsek, rakenna torni
     def handle_mouse(self, event_x, event_y):
         '''
         Args:
         '''
         print("event pos:", event_x, event_y)
+        button_coll = self._user_input.mouse_button_check(event_x, event_y, self._level.buttons)
+        if button_coll:
+            return
+
         twr_x = int(event_x - (event_x % 5))
         twr_y = int(event_y - (event_y % 5))
-        print(self._renderer._display.get_width(), self._renderer._display.get_height())
+
         tmp_rect = pygame.Rect(1000, 1000, 50, 50)
-        #tsekkaa että samalla kohdalla ei oo tornia X
-        
-        twr_in_bounds = self._level.tower_in_bounds(event_x, event_y, tmp_rect)
+
+        twr_in_bounds = self._level.cells.tower_in_bounds(event_x, event_y, tmp_rect)
         if twr_in_bounds:
-            twr_fits = self._level.tower_fits(event_x, event_y, tmp_rect)
+            twr_fits = self._level.cells.tower_fits(event_x, event_y, tmp_rect)
             if twr_fits:
-                self._level.change_cells_to(event_x,event_y, tmp_rect, 1)
+                self._level.cells.change_cells_to(event_x, event_y, tmp_rect, 1)
                 tower = Tower(twr_x, twr_y, "tower.png", 5, 5, 250, 1000, self._level)
                 self._level.towers.add(tower)
-                self._level._initialize_sprites()        
+                self._level._initialize_sprites()
             else:
                 print("tower doesn't fit :(")
         else:
             print("tower not in bounds :|")
-        #tsekkaa että torni tulee ruudulle xx
-        #merkkaa kohdalle torni¨XX
+        tmp_rect = None
+
+        
