@@ -14,4 +14,5 @@
 |29/11  | 2    | byrokratiaa |
 |30/11  | 2    | wave kamaa, highlight kamaa |
 |03/12  | 5.23 | tornin rakentaminen ja solusysteemi yms |
+|05/12  | 3.82 | napin kanssa pläräämistä |
 
