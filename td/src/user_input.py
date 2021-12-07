@@ -9,7 +9,8 @@ from pygame.locals import (# pylint: disable=no-name-in-module
     KEYDOWN, # pylint: disable=unused-import
     QUIT, # pylint: disable=unused-import
     MOUSEBUTTONDOWN,
-    K_1
+    K_1,
+    K_p
 )
 
 class UserInput:
@@ -19,6 +20,8 @@ class UserInput:
 
     def __init__(self):
         self.one_active = 0
+        self.pause = 0
+        self.keys = {K_1: self.one_active, K_p : self.pause}
 
     def key_handler(self, event_key, game_loop):
         '''
@@ -29,19 +32,26 @@ class UserInput:
         if event_key == K_ESCAPE:
             game_loop.running = False
 
+        if event_key == K_p:
+            self.pause ^= 1
+            print(self.pause)
+            return
+
         if event_key == K_1:
-            if self.one_active == 1:
-                self.one_active = 0
-            else:
-                self.one_active = 1
+            self.one_active ^= 1
+
+    #def flip(self, key):
+    #    '''
+    #    flips the value of given key
+    #    '''
+    #    self.keys[key] ^= 1
 
     def flip_one(self):
         '''
         flips the value of one_active
         '''
         self.one_active ^= 1
-        print("one flipped")
-  
+
     def mouse_button_check(self, event_x, event_y, buttons):
         for button in buttons:
             if button.rect.collidepoint(event_x, event_y):

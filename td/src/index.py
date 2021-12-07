@@ -38,21 +38,13 @@ def main():
     highlight = Highlight(1, 1)
     level.highlights.add(highlight)
 
-    #gandalf = Enemy(50, 300, "gandalf.png", 2)
     tower = Tower(500, 200, "tower.png", 15, 15, 250, 1000, level)
-
-    #gandalf2 = Enemy(50, 500, "gandalf.png", 2)
     tower2 = Tower(100, 200, "tower.png", 50, 50, 250, 1000, level)
-    #level.enemies.add(gandalf)
     level.towers.add(tower)
-    #level.enemies.add(gandalf2)
     level.towers.add(tower2)
-# def __init__(self, pos_x, pos_y, img_name, size_x, size_y, button_func):
-    print(user_input.flip_one)
+
     butt = Button(10, 530, "tykki_nappi.png", 70, 70, user_input.flip_one)
     level.buttons.add(butt)
-    #projectile = Projectile(450,450,"projectile.png",10,10,gandalf, opp_unit_size,1)
-    # level.projectiles.add(projectile)
 
     level._initialize_sprites() # pylint: disable=protected-access
     renderer = Renderer(screen, level)

@@ -10,7 +10,8 @@ from pygame.locals import (# pylint: disable=no-name-in-module
     KEYDOWN, # pylint: disable=unused-import
     QUIT, # pylint: disable=unused-import
     MOUSEBUTTONDOWN,
-    K_1
+    K_1,
+    K_p
 )
 
 
@@ -32,27 +33,35 @@ class GameLoop:
         self.running = True
         while True:
             self._handle_events()
-            self._renderer.render(self._user_input)
-            current_time = self._clock.get_ticks()
-            self._clock.tick(60)
-            self._level.update(current_time)
+            if self._user_input.pause == 0:
+                self._renderer.render(self._user_input)
+                current_time = self._clock.get_ticks()
+                self._clock.tick(60)
+                self._level.update(current_time)
 
     def _handle_events(self):
         '''
         Args:
         '''
         for event in pygame.event.get():
-            if event.type == KEYDOWN:
-                self._user_input.key_handler(event.key, self)
-            elif event.type == MOUSEBUTTONDOWN:
-                event_x, event_y = event.pos
-                self.handle_mouse(event_x, event_y)
-            elif event.type == QUIT:
-                self.running = False
+            if self._user_input.pause == 1:
+                if event.type == KEYDOWN:
+                    self._user_input.key_handler(event.key, self)
+                elif event.type == QUIT:
+                    self.running = False
+            else:
+                if event.type == KEYDOWN:
+                    self._user_input.key_handler(event.key, self)
+                elif event.type == MOUSEBUTTONDOWN:
+                    event_x, event_y = event.pos
+                    self.handle_mouse(event_x, event_y)
+                elif event.type == QUIT:
+                    self.running = False
 
         if not self.running:
             pygame.quit() # pylint: disable=no-member
             exit()
+
 
     #pura esim seuraaviin: rakennustsek, rakenna torni
     def handle_mouse(self, event_x, event_y):
