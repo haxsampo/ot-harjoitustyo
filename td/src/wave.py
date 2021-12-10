@@ -28,6 +28,7 @@ class Wave:
         if(current_time - self.last_spawn > self.cooldown):
             self.last_spawn = current_time
             if self.enemies_per_wave >= self.enemies_spawned:
-                gandalf = Enemy(self.pos_x, self.pos_y, "gandalf.png", 2)
+                print(level.get_lives())
+                gandalf = Enemy(self.pos_x, self.pos_y, "gandalf.png", 20)
                 level.enemies.add(gandalf)
                 level._initialize_sprites() # pylint: disable=protected-access

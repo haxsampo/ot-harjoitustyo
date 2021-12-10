@@ -11,6 +11,8 @@ from sprites.highlight import Highlight
 from cells import Cells
 from user_input import UserInput
 from sprites.button import Button
+from sprites.base import Base
+from ui.notifications import Notification
 
 pygame.init() # pylint: disable=no-member
 
@@ -22,22 +24,18 @@ def main():
     SCREEN_HEIGHT = 600
     CELL_SIZE = 5
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-
-    #cells = list(range(0,int(SCREEN_HEIGHT/CELL_SIZE), 1))
-    """ cells = [0]* int(SCREEN_HEIGHT/CELL_SIZE)
-    for i in range(0,len(cells),1):
-        x_list = [0] * int(SCREEN_WIDTH/CELL_SIZE)
-        cells[i] = x_list """
     cells = Cells(SCREEN_HEIGHT, SCREEN_WIDTH, CELL_SIZE)
     user_input = UserInput()
+
+    base = Base(SCREEN_WIDTH - 100, SCREEN_HEIGHT/2, 96, 51, "base96x51.png")
 
     pygame.display.flip()
     clock = Clock()
     wave = Wave(1, 10, 2000, 50, 300)
-    level = Level(wave, cells)
+    level = Level(wave, cells, 10)
     highlight = Highlight(1, 1)
     level.highlights.add(highlight)
-
+    level.environment.add(base)
     tower = Tower(500, 200, "tower.png", 15, 15, 250, 1000, level)
     tower2 = Tower(100, 200, "tower.png", 50, 50, 250, 1000, level)
     level.towers.add(tower)
@@ -45,10 +43,11 @@ def main():
 
     butt = Button(10, 530, "tykki_nappi.png", 70, 70, user_input.flip_one)
     level.buttons.add(butt)
+    notif = Notification(SCREEN_WIDTH, SCREEN_HEIGHT, screen)
 
     level._initialize_sprites() # pylint: disable=protected-access
     renderer = Renderer(screen, level)
-    game_loop = GameLoop(clock, renderer, level, user_input)
+    game_loop = GameLoop(clock, renderer, level, user_input, notif)
     game_loop.start()
 
 
