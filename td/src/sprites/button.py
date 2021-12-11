@@ -15,11 +15,9 @@ class Button(pygame.sprite.Sprite):
         self.rect.x = pos_x
         self.rect.y = pos_y
         self.func = button_func
-        print(self.func)
-        self.func()
 
-    def run_func(self):
+    def run_func(self, *args):
         '''
         Runs the function given in init
         '''
-        self.func()
+        self.func(*args)

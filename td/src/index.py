@@ -13,9 +13,9 @@ from user_input import UserInput
 from sprites.button import Button
 from sprites.base import Base
 from ui.notifications import Notification
+from ui.menu import Menu
 
 pygame.init() # pylint: disable=no-member
-
 
 def main():
     ALFA = (255, 255, 55)
@@ -36,20 +36,21 @@ def main():
     highlight = Highlight(1, 1)
     level.highlights.add(highlight)
     level.environment.add(base)
-    tower = Tower(500, 200, "tower.png", 15, 15, 250, 1000, level)
-    tower2 = Tower(100, 200, "tower.png", 50, 50, 250, 1000, level)
-    level.towers.add(tower)
-    level.towers.add(tower2)
+    #tower = Tower(500, 200, "tower.png", 15, 15, 250, 1000, level)
+    #tower2 = Tower(100, 200, "tower.png", 50, 50, 250, 1000, level)
+    #level.towers.add(tower)
+    #level.towers.add(tower2)
 
     butt = Button(10, 530, "tykki_nappi.png", 70, 70, user_input.flip_one)
     level.buttons.add(butt)
     notif = Notification(SCREEN_WIDTH, SCREEN_HEIGHT, screen)
+    menu = Menu()
+    menu.menu_initialization(user_input)
 
     level._initialize_sprites() # pylint: disable=protected-access
-    renderer = Renderer(screen, level)
-    game_loop = GameLoop(clock, renderer, level, user_input, notif)
+    renderer = Renderer(screen, level, menu)
+    game_loop = GameLoop(clock, renderer, level, user_input, notif, menu)
     game_loop.start()
-
 
 if __name__ == "__main__":
     main()

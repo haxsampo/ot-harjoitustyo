@@ -5,9 +5,10 @@ class Renderer:
     '''
     Args:
     '''
-    def __init__(self, display, level):
+    def __init__(self, display, level, menu):
         self._display = display
         self._level = level
+        self._menu = menu
 
     def render(self, user_input, notifs, ground_rgb):
         '''
@@ -30,3 +31,12 @@ class Renderer:
             notifs.display_notification()
         if user_input.one_active:
             self._level.highlights.draw(self._display)
+
+    def main_menu_render(self, background_rgb):
+        '''
+        Args:
+        background_rgb ((int, int, int))
+        '''
+        self._display.fill(background_rgb)
+        self._menu.all_sprites.draw(self._display)
+        pygame.display.update()
