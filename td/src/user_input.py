@@ -49,14 +49,16 @@ class UserInput:
         Args:
         buttons (pygame.sprite.SpriteGroup)
         '''
+        ret = 0
         for button in buttons:
             if button.rect.collidepoint(event_x, event_y):
                 sig = signature(button.func)
-                print(len(sig.parameters))
                 if len(sig.parameters) >= 1:
                     button.run_func(game_loop)
                 else:
                     button.run_func()
+                ret = 1
+        return ret
 
     #pura esim seuraaviin: rakennustsek, rakenna torni
     def handle_mouse(self, event_x, event_y, scene, level, game_loop=None):
@@ -97,10 +99,9 @@ class UserInput:
 
     def new_game(self, args=None):
         '''
-        Gameloopin sceneen pitäis saada muutos täältä
+        starts a new game
         '''
         args.scene = "level"
-        print("newgame ")
 
     def exit(self, args=None):
         '''

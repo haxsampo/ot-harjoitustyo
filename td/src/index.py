@@ -36,10 +36,6 @@ def main():
     highlight = Highlight(1, 1)
     level.highlights.add(highlight)
     level.environment.add(base)
-    #tower = Tower(500, 200, "tower.png", 15, 15, 250, 1000, level)
-    #tower2 = Tower(100, 200, "tower.png", 50, 50, 250, 1000, level)
-    #level.towers.add(tower)
-    #level.towers.add(tower2)
 
     butt = Button(10, 530, "tykki_nappi.png", 70, 70, user_input.flip_one)
     level.buttons.add(butt)

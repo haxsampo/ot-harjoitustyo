@@ -1,4 +1,5 @@
 import pygame
+from pf.cell import Cell
 
 class Cells:
     '''
@@ -11,20 +12,40 @@ class Cells:
         self.SCREEN_WIDTH = SCREEN_WIDTH
         self.CELL_SIZE = CELL_SIZE
         self.cells = [0]* int(SCREEN_HEIGHT/CELL_SIZE)
-        for i in range(0,len(self.cells),1):
+        for i in range(0, len(self.cells), 1):
             x_list = [0] * int(SCREEN_WIDTH/CELL_SIZE)
             self.cells[i] = x_list
+
+        self.celler = [0]* int(SCREEN_HEIGHT/CELL_SIZE)
+        for i in range(0,len(self.cells),1):
+            x_list = [0] * int(SCREEN_WIDTH/CELL_SIZE)
+            for j in range(0,len(x_list),1):
+                x_list[j] = Cell(j,i,0)
+            self.celler[i] = x_list
+
 
     def cell_value(self, x_pos, y_pos):
         '''
         Args:
+        x_pos (int): pixel width
+        y_pos (int): pixel height
         return (int): the value of the cell in question
         0 = empty, 1 = tower/blocked
         '''
-        x_cellified = int((x_pos - (x_pos % 5))/5)
-        y_cellified = int((y_pos - (y_pos % 5))/5)
+        x_cellified = int((x_pos - (x_pos % self.CELL_SIZE))/self.CELL_SIZE)
+        y_cellified = int((y_pos - (y_pos % self.CELL_SIZE))/self.CELL_SIZE)
         ret_val = self.cells[y_cellified][x_cellified]
         return ret_val
+    
+    def cell_value_in_cells(self, x_pos, y_pos):
+        '''
+        Args:
+        x_pos (int): n:th cell in width
+        y_pos (int): m:th cell in height
+        return (int): the value of the cell in question
+        0 = empty, 1 = tower/blocked
+        '''
+        return self.cells[y_pos][x_pos]
 
     def tower_fits(self, x_pos, y_pos, tower_rect):
         '''
@@ -66,6 +87,12 @@ class Cells:
                 self.cells[y][x] = value
 
     def tower_in_bounds(self, event_x, event_y, rect):
+        '''
+        Args:
+        event_x (int):
+        event_y (int):
+        rect (pygame.Rect):
+        '''
         twr_x = int(event_x - (event_x % 5))
         twr_y = int(event_y - (event_y % 5))
         if rect.width + twr_x > self.SCREEN_WIDTH:
@@ -73,4 +100,17 @@ class Cells:
         if rect.height + twr_y > self.SCREEN_HEIGHT:
             return False
         return True
-    
+
+    def get_neighbours(self, location):
+        '''
+        Args:
+        location ((int,int), tuple): in cells
+
+        Return:
+        list of class Cell
+        '''
+        left = Cell(location[0]-1, location[1], self.cells[location[1]][location[0]-1])
+        up = Cell(location[0], location[1]-1, self.cells[location[1]-1][location[0]])
+        right = Cell(location[0]+1, location[1], self.cells[location[1]][location[0]+1])
+        down = Cell(location[0], location[1]+1, self.cells[location[1]+1][location[0]])
+        return [left, right, up, down]
