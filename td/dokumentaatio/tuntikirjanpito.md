@@ -18,6 +18,7 @@
 |09/12  | 4    | main menu on hankala|
 |10/12  | 4    | päävalikko oli edelleen hankala, nyt toiminee |
 |12/12  | 4    | pathfinding kamaa |
+|13/12  | 2    | byrokratiaa
 
-Total   | ~42
+Total   | ~44  |
 

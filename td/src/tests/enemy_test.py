@@ -4,6 +4,9 @@ import pygame
 from sprites.enemy import Enemy
 from sprites.tower import Tower
 from level import Level
+from cells import Cells
+from wave import Wave
+from global_values import *
 
 
 class TestEnemy(unittest.TestCase):
@@ -12,9 +15,12 @@ class TestEnemy(unittest.TestCase):
     '''
     def setUp(self):
         self.testEnemy = Enemy(50, 500, "gandalf.png", 1)
-        self.level = Level()
+        #tee cells ja wave + life(int) ja syötä levelille
+        cells = Cells(SCREEN_HEIGHT, SCREEN_WIDTH, CELL_SIZE)
+        wave = Wave(1, 10, 2000, 50, 300)
+        self.level = Level(wave, cells, 10)
         self.level.enemies.add(self.testEnemy)
-        self.tower = Tower(100, 500, "tower.png", 50, 50, 250, 1000, level)
+        self.tower = Tower(100, 500, "tower.png", 50, 50, 250, 1000, self.level)
         self.level.towers.add(self.tower)
 
     def test_tower_blocks_movement(self):

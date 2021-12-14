@@ -34,11 +34,11 @@ class Astar:
 
             if current == end:
                 break
-            
+
             for next in cells.get_neighbours(current):
                 if next.value != 0:
                     break
-                new_cost = cost_so_far[current] + 1 # implement weighted graph costs here if required
+                new_cost = cost_so_far[current] + 1 
                 if (next.x, next.y) not in cost_so_far or new_cost < cost_so_far[(next.x, next.y)]:
                     cost_so_far[(next.x, next.y)] = new_cost
                     priority = new_cost + self.heuristic((next.x, next.y), end)

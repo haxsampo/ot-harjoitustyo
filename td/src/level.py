@@ -1,10 +1,8 @@
 import pygame
 #from sprites.enemy import Enemy
 from load_image import load_image
+from global_values import *
 
-CELL_SIZE = 5
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 600
 class Level:
     '''
     Args:

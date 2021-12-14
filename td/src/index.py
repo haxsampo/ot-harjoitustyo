@@ -14,17 +14,18 @@ from sprites.button import Button
 from sprites.base import Base
 from ui.notifications import Notification
 from ui.menu import Menu
+from global_values import *
 
 pygame.init() # pylint: disable=no-member
 
 def main():
-    ALFA = (255, 255, 55)
+    #ALFA = (255, 255, 55)
     #opp_unit_size = 50
-    SCREEN_WIDTH = 800 #KOSKA PYTHON ON KAKKAPÄÄ, NIIN NÄÄ ON TALLENNETTU MYÖS LEVELIIN, VAIHDA KAIKKI KERRALLA
-    SCREEN_HEIGHT = 600
-    CELL_SIZE = 5
+    #SCREEN_WIDTH = 800 
+    #SCREEN_HEIGHT = 600
+    #CELL_SIZE = 5
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-    cells = Cells(SCREEN_HEIGHT, SCREEN_WIDTH, CELL_SIZE)
+    cells = Cells(SCREEN_HEIGHT, SCREEN_WIDTH, CELL_SIZE, 0)
     user_input = UserInput()
 
     base = Base(SCREEN_WIDTH - 100, SCREEN_HEIGHT/2, 96, 51, "base96x51.png")

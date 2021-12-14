@@ -2,10 +2,12 @@
 
 ## Harjoitustyö
 
+Harjoitustyön aiheena on tower defence -tyyppinen peli.
+
 - [Tuntikirjanpito](./td/dokumentaatio/tuntikirjanpito.md)
 - [Käyttöliittymäluonnos](./td/dokumentaatio/kayttoliittymaluonnos.png)
 - [Alustava vaatimusmäärittely](./td/dokumentaatio/vaatimusmaarittely.md)
-
+- [Käyttöohje](./td/dokumentaatio/kayttoohje.md)
 
 ### Doku-mentaatio
 

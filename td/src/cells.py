@@ -6,19 +6,19 @@ class Cells:
     Args:
     '''
 
-    def __init__(self, SCREEN_HEIGHT, SCREEN_WIDTH, CELL_SIZE):
+    def __init__(self, SCREEN_HEIGHT, SCREEN_WIDTH, CELL_SIZE, initial_value):
         self.a = 1
         self.SCREEN_HEIGHT = SCREEN_HEIGHT
         self.SCREEN_WIDTH = SCREEN_WIDTH
         self.CELL_SIZE = CELL_SIZE
         self.cells = [0]* int(SCREEN_HEIGHT/CELL_SIZE)
         for i in range(0, len(self.cells), 1):
-            x_list = [0] * int(SCREEN_WIDTH/CELL_SIZE)
+            x_list = [initial_value] * int(SCREEN_WIDTH/CELL_SIZE)
             self.cells[i] = x_list
 
         self.celler = [0]* int(SCREEN_HEIGHT/CELL_SIZE)
         for i in range(0,len(self.cells),1):
-            x_list = [0] * int(SCREEN_WIDTH/CELL_SIZE)
+            x_list = [initial_value] * int(SCREEN_WIDTH/CELL_SIZE)
             for j in range(0,len(x_list),1):
                 x_list[j] = Cell(j,i,0)
             self.celler[i] = x_list
@@ -32,6 +32,11 @@ class Cells:
         return (int): the value of the cell in question
         0 = empty, 1 = tower/blocked
         '''
+        if x_pos < 0 or y_pos < 0:
+            return 1
+        if x_pos > self.SCREEN_WIDTH or y_pos > self.SCREEN_HEIGHT:
+            return 1
+
         x_cellified = int((x_pos - (x_pos % self.CELL_SIZE))/self.CELL_SIZE)
         y_cellified = int((y_pos - (y_pos % self.CELL_SIZE))/self.CELL_SIZE)
         ret_val = self.cells[y_cellified][x_cellified]
