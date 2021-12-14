@@ -5,13 +5,13 @@ ALFA = (255, 255, 55)
 OPPONENT_UNIT_SIZE = 50 #in pixels
 
 from pygame.locals import (# pylint: disable=no-name-in-module
-    K_UP, # pylint: disable=unused-import
-    K_DOWN, # pylint: disable=unused-import
-    K_LEFT, # pylint: disable=unused-import 
-    K_RIGHT, # pylint: disable=unused-import
-    K_ESCAPE, # pylint: disable=unused-import
-    KEYDOWN, # pylint: disable=unused-import
-    QUIT, # pylint: disable=unused-import
+    K_UP, 
+    K_DOWN, 
+    K_LEFT, 
+    K_RIGHT, 
+    K_ESCAPE, 
+    KEYDOWN, 
+    QUIT, 
     MOUSEBUTTONDOWN,
     K_1,
     K_p,

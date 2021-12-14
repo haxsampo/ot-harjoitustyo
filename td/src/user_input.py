@@ -28,7 +28,6 @@ class UserInput:
             self.one_active ^= 1
         if event_key == K_g:
             game_loop._level.set_lives(0)
-        return None
 
     def mouse_button_check(self, event_x, event_y, buttons, game_loop):
         '''

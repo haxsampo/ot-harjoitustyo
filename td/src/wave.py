@@ -1,5 +1,3 @@
-import pygame
-
 from sprites.enemy import Enemy
 
 class Wave:
@@ -25,10 +23,10 @@ class Wave:
         Args:
             current_time (int): milliseconds since pygame.init() was called
         '''
-        if(current_time - self.last_spawn > self.cooldown):
+        if current_time - self.last_spawn > self.cooldown:
             self.last_spawn = current_time
             if self.enemies_per_wave >= self.enemies_spawned:
                 print(level.get_lives())
                 gandalf = Enemy(self.pos_x, self.pos_y, "gandalf.png", 20)
                 level.enemies.add(gandalf)
-                level._initialize_sprites() # pylint: disable=protected-access
+                level._initialize_sprites()

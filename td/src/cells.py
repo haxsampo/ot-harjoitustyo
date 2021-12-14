@@ -41,7 +41,7 @@ class Cells:
         y_cellified = int((y_pos - (y_pos % self.CELL_SIZE))/self.CELL_SIZE)
         ret_val = self.cells[y_cellified][x_cellified]
         return ret_val
-    
+
     def cell_value_in_cells(self, x_pos, y_pos):
         '''
         Args:
@@ -58,7 +58,7 @@ class Cells:
         Args:
         x_pos (int): position x of mouse click
         y_pos (int): position y of mouse click
-        tower_rect (pygame.Rect): 
+        tower_rect (pygame.Rect):
         Returns true if it fits, False if it doesn't
         '''
         x_cellified = int((x_pos - (x_pos % 5))/5)
@@ -68,9 +68,9 @@ class Cells:
         tower_cell_width = int(tower_rect.width / self.CELL_SIZE)
         tower_cell_height = int(tower_rect.height / self.CELL_SIZE)
         ret_val = True
-        for y in range(y_cellified, y_cellified+tower_cell_height):
-            for x in range(x_cellified, x_cellified+tower_cell_width):
-                cell_value = self.cells[y][x]
+        for y__ in range(y_cellified, y_cellified+tower_cell_height):
+            for x__ in range(x_cellified, x_cellified+tower_cell_width):
+                cell_value = self.cells[y__][x__]
                 if cell_value != 0:
                     ret_val = False
 
@@ -87,9 +87,9 @@ class Cells:
         y_cellified = int((y_pos - (y_pos % 5))/5)
         tower_cell_width = int(rect_area.width / self.CELL_SIZE)
         tower_cell_height = int(rect_area.height / self.CELL_SIZE)
-        for y in range(y_cellified, y_cellified+tower_cell_height):
-            for x in range(x_cellified, x_cellified+tower_cell_width):
-                self.cells[y][x] = value
+        for y__ in range(y_cellified, y_cellified+tower_cell_height):
+            for x__ in range(x_cellified, x_cellified+tower_cell_width):
+                self.cells[y__][x__] = value
 
     def tower_in_bounds(self, event_x, event_y, rect):
         '''
@@ -115,7 +115,7 @@ class Cells:
         list of class Cell
         '''
         left = Cell(location[0]-1, location[1], self.cells[location[1]][location[0]-1])
-        up = Cell(location[0], location[1]-1, self.cells[location[1]-1][location[0]])
+        up_ = Cell(location[0], location[1]-1, self.cells[location[1]-1][location[0]])
         right = Cell(location[0]+1, location[1], self.cells[location[1]][location[0]+1])
         down = Cell(location[0], location[1]+1, self.cells[location[1]+1][location[0]])
-        return [left, right, up, down]
+        return [left, right, up_, down]

@@ -11,7 +11,7 @@ class GameLoop:
         self._renderer = renderer
         self._level = level
         self._user_input = user_input
-        self._notification = notification
+        self.notification = notification
         self._menu = menu
         self.scene = "menu"
 
@@ -29,8 +29,6 @@ class GameLoop:
                 pygame.quit() # pylint: disable=no-member
                 exit()
 
-        
-
     def menu_scene(self):
         '''
         Args:
@@ -45,7 +43,7 @@ class GameLoop:
         self._handle_events()
         if self._level.lives <= 0:
             self.level_over()
-        self._renderer.render(self._user_input, self._notification, (255, 205, 200))
+        self._renderer.render(self._user_input, self.notification, (255, 205, 200))
         if self._user_input.pause == 0:
             current_time = self._clock.get_ticks()
             self._clock.tick(60)
@@ -86,5 +84,5 @@ class GameLoop:
         args:
         '''
         self._user_input.pause = 1
-        self._notification.change_label("game over :(")
+        self.notification.change_label("game over :(")
 

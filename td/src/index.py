@@ -19,11 +19,6 @@ from global_values import *
 pygame.init() # pylint: disable=no-member
 
 def main():
-    #ALFA = (255, 255, 55)
-    #opp_unit_size = 50
-    #SCREEN_WIDTH = 800 
-    #SCREEN_HEIGHT = 600
-    #CELL_SIZE = 5
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     cells = Cells(SCREEN_HEIGHT, SCREEN_WIDTH, CELL_SIZE, 0)
     user_input = UserInput()
