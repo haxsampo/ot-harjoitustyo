@@ -2,9 +2,9 @@ import pygame
 from load_image import load_image
 
 class Base(pygame.sprite.Sprite):
-    '''
+    """
     raahraahblääh
-    '''
+    """
     def __init__(self, pos_x, pos_y, size_x, size_y, img_name):
         super().__init__()
         self.image = load_image(img_name)
@@ -14,11 +14,12 @@ class Base(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = pos_x
         self.rect.y = pos_y
+        print("BASE: ", self.rect.x, self.rect.y)
 
     def update(self, level):
-        '''
+        """
         called from level.update()
-        '''
+        """
         blocks_hit_list = pygame.sprite.spritecollide(self, level.enemies, False)
         for enemy in level.enemies:
             col = pygame.sprite.collide_rect(self, enemy)

@@ -25,7 +25,7 @@ class UserInput:
             game_loop._notification.change_label("paused", (30, 30, 32))
             return
         if event_key == K_1:
-            self.one_active ^= 1
+            self.flip_one()
         if event_key == K_g:
             game_loop._level.set_lives(0)
 
@@ -63,24 +63,54 @@ class UserInput:
             if button_coll:
                 return
 
-            twr_x = int(event_x - (event_x % 5))
-            twr_y = int(event_y - (event_y % 5))
-
-            tmp_rect = pygame.Rect(1000, 1000, 50, 50)
-
-            twr_in_bounds = level.cells.tower_in_bounds(event_x, event_y, tmp_rect)
-            if twr_in_bounds:
-                twr_fits = level.cells.tower_fits(event_x, event_y, tmp_rect)
-                if twr_fits:
-                    level.cells.change_cells_to(event_x, event_y, tmp_rect, 1)
-                    tower = Tower(twr_x, twr_y, "tower.png", 5, 5, 250, 1000, level)
-                    level.towers.add(tower)
-                    level._initialize_sprites()
-                else:
-                    print("tower doesn't fit :(")
+            if self.one_active:
+                self.build_tower(event_x, event_y, level)
             else:
-                print("tower not in bounds :|")
-            tmp_rect = None
+                print("pim naks")
+                
+
+    def build_tower(self, event_x, event_y, level):
+        """
+        Checks whether new tower fits in
+        Builds a tower on given level, given coords
+        Updates enemy paths
+        Updates level level.path
+        Args:
+        """
+        twr_x = int(event_x - (event_x % 5))
+        twr_y = int(event_y - (event_y % 5))
+
+        tmp_rect = pygame.Rect(event_x, event_y, 50, 50)
+
+        twr_in_bounds = level.cells.tower_in_bounds(event_x, event_y, tmp_rect)
+        if twr_in_bounds:
+            twr_fits = level.cells.tower_fits(event_x, event_y, tmp_rect)
+            enviro_overlap = self.rect_overlap(tmp_rect, level.environment)
+            if twr_fits and not enviro_overlap:
+                level.cells.change_cells_to(event_x, event_y, tmp_rect, 1)
+                tower = Tower(twr_x, twr_y, "tower.png", 5, 5, 250, 1000, level)
+                level.towers.add(tower)
+                level._initialize_sprites()
+                level.pathfinder.update_paths(level.enemies, level.end)
+                level.path = level.pathfinder.calc_path(level.start, level.end)
+            else:
+                print("tower doesn't fit :(")
+        else:
+            print("tower not in bounds :|")
+        tmp_rect = None
+
+    def rect_overlap(self, rect, sprite_group):
+        """
+        Does given rectangle overlap any of the rects of given sprite group?
+        Args:
+        rect (pygame.Rect)
+        sprite_group (pygame.sprite.Group)
+        """
+        overlap = False
+        for sprite in sprite_group:
+            if rect.colliderect(sprite.rect):
+                overlap = True
+        return overlap
 
     def new_game(self, args=None):
         '''

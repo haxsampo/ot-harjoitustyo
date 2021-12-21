@@ -1,13 +1,43 @@
 import pygame
+from global_values import CELL_SIZE
 
 class Pathfind:
     '''
-    Implents A* for enemy
+    Holds pathfinding functions, to now clutter level
     '''
 
-    def __init__(self, cells):
-        a=1
+    def __init__(self, cells, algo):
         self.cells = cells
+        self.algo = algo
 
-    def calculate_path(self, start, end):
-        a=2
+    def calc_path(self, start, end):
+        """
+        Calculates path for enemies
+        """
+        came_from, cost_so_far = self.algo.search(self.cells, start, end)
+        cleaned_path = self.clean_path(start, end, came_from)
+        return cleaned_path
+    
+    def clean_path(self, start, end, path_dict):
+        """
+        cleans the path dictionary into a list, start as first index and end as last
+        """
+        path_list = []
+        curr = end
+        while curr != start:
+            path_list.append(curr)
+            curr = path_dict[curr]
+        path_list.append(start)
+        rev = list(reversed(path_list))
+        return rev
+
+    def update_paths(self, enemies, end):
+        """
+        Updates the path for all enemies in level
+        """
+        for enemy in enemies:
+            x_pos = int(enemy.rect.x - (enemy.rect.x % CELL_SIZE))
+            y_pos = int(enemy.rect.y -(enemy.rect.y % CELL_SIZE))
+            new_path = self.calc_path((x_pos, y_pos), end)
+            enemy.path = new_path
+            enemy.path_index = 0

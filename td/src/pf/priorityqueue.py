@@ -13,7 +13,7 @@ class PriorityQueue:
         '''
         return not self.elements
 
-    def put(self, priority: float, item: T):
+    def put(self, item: T, priority: float):
         '''
         puts the given element in the heap, so that position is based on priority
         '''

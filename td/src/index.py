@@ -14,21 +14,25 @@ from sprites.button import Button
 from sprites.base import Base
 from ui.notifications import Notification
 from ui.menu import Menu
-from global_values import *
+from pf.astar import Astar
+from global_values import SCREEN_WIDTH, SCREEN_HEIGHT, CELL_SIZE
+from pf.pathfinding import Pathfind
 
 pygame.init() # pylint: disable=no-member
 
 def main():
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-    cells = Cells(SCREEN_HEIGHT, SCREEN_WIDTH, CELL_SIZE, 0)
+    cells = Cells(0)
     user_input = UserInput()
 
     base = Base(SCREEN_WIDTH - 100, SCREEN_HEIGHT/2, 96, 51, "base96x51.png")
-
+    #cells.change_cells_to(base.rect.x, base.rect.y, base.rect, 1)
+    astar = Astar(cells)
     pygame.display.flip()
     clock = Clock()
-    wave = Wave(1, 10, 2000, 50, 300)
-    level = Level(wave, cells, 10)
+    wave = Wave(1, 1, 2000, 50, 300)
+    pathfinder = Pathfind(cells, astar)
+    level = Level(wave, cells, 10, astar, pathfinder)
     highlight = Highlight(1, 1)
     level.highlights.add(highlight)
     level.environment.add(base)

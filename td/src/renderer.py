@@ -12,7 +12,11 @@ class Renderer:
 
     def render(self, user_input, notifs, ground_rgb):
         '''
+        Main rendering function, called from gameloop
         Args:
+        user_input (UserInput class)
+        notifs (Notification class)
+        ground_rgb ((int, int, int))
         '''
         self._display.fill(ground_rgb)
         self._level.all_sprites.draw(self._display)
@@ -21,9 +25,16 @@ class Renderer:
             tower.draw_range(self._display)
         pygame.display.update()
 
+    #def path_painter(self):
+    #    for pos in self._level.path:
+    #        self._display.set_at(pos, (254, 254, 254))
+
     def conditional_renders(self, user_input, notifs):
         '''
         Checks user input before rendering
+        Args:
+        user_input (UserInput class)
+        notifs (Notification class)
         '''
         if user_input.pause == 1:
             notifs.display_notification()

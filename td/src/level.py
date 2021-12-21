@@ -1,16 +1,23 @@
+from os import path
 import pygame
 #from sprites.enemy import Enemy
 from load_image import load_image
-from global_values import *
+from pf.astar import Astar
+from global_values import SCREEN_WIDTH, SCREEN_HEIGHT, CELL_SIZE
 
 class Level:
-    '''
+    """
+    Holds gameobjects of a specific level, calls their update function
     Args:
     cells (list of lists): 0 = empty, 1 = tower/blocked
     lives (int): amount of lives player has for the level
-    '''
+    """
 
-    def __init__(self, wave, cells, lives):
+    def __init__(self, wave, cells, lives, pf_algo, pathfinder):
+        self.end = (SCREEN_WIDTH - 100, SCREEN_HEIGHT/2)
+        self.start = (50, 300)
+        self.pathfinder = pathfinder
+        self.pf_algo = pf_algo
         self.cells = cells
         self.wave = wave
         self.environment = pygame.sprite.Group()
@@ -21,23 +28,24 @@ class Level:
         self.all_sprites = pygame.sprite.Group()
         self.buttons = pygame.sprite.Group()
         self.lives = lives
+        self.path = self.pathfinder.calc_path(self.start, self.end)
 
     def update(self, current_time):
-        '''
+        """
         Args:
             current_time (int): milliseconds since pygame.init() was called
-        '''
+        """
         self.environment.update(self)
-        self.enemies.update(self.towers)
+        self.enemies.update(self.towers, self)
         self.towers.update(self.enemies, current_time)
         self.projectiles.update()
         self.wave.update(current_time, self)
         self.highlights.update()
 
     def _initialize_sprites(self):
-        '''
+        """
         Args:
-        '''
+        """
         self.all_sprites.add(self.projectiles)
         self.all_sprites.add(self.enemies)
         self.all_sprites.add(self.towers)
@@ -45,20 +53,20 @@ class Level:
         self.all_sprites.add(self.buttons)
 
     def towers_shoot(self):
-        '''
+        """
         Args:
-        '''
+        """
         for tower in self.towers:
             tower.check_for_enemies(self.enemies)
 
     def set_lives(self, value):
-        '''
+        """
         value (int): set lives to value
-        '''
+        """
         self.lives = value
 
     def get_lives(self):
-        '''
+        """
         Args:
-        '''
+        """
         return self.lives
