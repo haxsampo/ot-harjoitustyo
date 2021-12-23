@@ -7,14 +7,14 @@ class Menu:
     Args:
     """
     def __init__(self, highscore):
-        self.main_buttons = pygame.sprite.Group()
+        self.buttons = pygame.sprite.Group()
         self.all_sprites = pygame.sprite.Group()
         self.highscore = highscore
         self.txt_input = pygame_textinput.TextInputVisualizer()
-        
+        self.player_name = ""
 
     def _initialize_sprites(self):
-        self.all_sprites.add(self.main_buttons)
+        self.all_sprites.add(self.buttons)
 
     def menu_initialization(self, butt_funcs):
         """
@@ -26,9 +26,9 @@ class Menu:
         start_butt = Button(30, 20, "menu_start.png", 327, 90, butt_funcs.change_scene, "level")
         #score_butt = Button(30, 180, "highscore.png", 327, 90, butt_funcs.change_scene, "scores")
         exit_butt = Button(30, 120, "main_menu_exit.png", 327, 90, butt_funcs.exit, False)
-        self.main_buttons.add(start_butt)
+        self.buttons.add(start_butt)
         #self.main_buttons.add(score_butt)
-        self.main_buttons.add(exit_butt)
+        self.buttons.add(exit_butt)
         self._initialize_sprites()
 
     def menu_render(self, display):

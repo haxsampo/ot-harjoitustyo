@@ -29,7 +29,7 @@ class UserInput:
         if event_key == K_g:
             game_loop._level.set_lives(0)
 
-    def mouse_button_check(self, event_x, event_y, buttons, game_loop, scene_obj):
+    def mouse_button_check(self, event_x, event_y, buttons, game_loop, scene_obj, scene_str):
         '''
         Args:
         buttons (pygame.sprite.SpriteGroup)
@@ -50,24 +50,22 @@ class UserInput:
 
     #pura esim seuraaviin: rakennustsek, rakenna torni
     def handle_mouse(self, event_x, event_y, scene_str, scene_obj, game_loop=None):
-        '''
+        """
+        Checks mouse inputs for button events + tower building
         Args:
         event_x (int): pos x of click in pixels
         event_y (int): pos y of click event in pixels
         scene (string): menu/level
         level (class Menu or class Level):
-        '''
+        """
         print("event pos:", event_x, event_y)
-        if scene_str == "menu":
-            self.mouse_button_check(event_x, event_y, scene_obj.main_buttons, game_loop, scene_obj)
+        button_coll = self.mouse_button_check(event_x, event_y,
+                                              scene_obj.buttons,
+                                              game_loop, scene_obj, scene_str)
+        if button_coll:
             return
-        if scene_str == "level":
-            button_coll = self.mouse_button_check(event_x, event_y, scene_obj.buttons, game_loop)
-            if button_coll:
-                return
-
-            if self.one_active:
-                self.build_tower(event_x, event_y, scene_obj)
+        if self.one_active:
+            self.build_tower(event_x, event_y, scene_obj)
 
     def build_tower(self, event_x, event_y, level):
         """
