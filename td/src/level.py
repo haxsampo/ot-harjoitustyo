@@ -13,7 +13,8 @@ class Level:
     lives (int): amount of lives player has for the level
     """
 
-    def __init__(self, wave, cells, lives, pf_algo, pathfinder):
+    def __init__(self, wave, cells, lives, pf_algo, pathfinder, score):
+        self.score = score
         self.end = (SCREEN_WIDTH - 100, SCREEN_HEIGHT/2)
         self.start = (50, 300)
         self.pathfinder = pathfinder

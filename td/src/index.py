@@ -17,14 +17,21 @@ from ui.menu import Menu
 from pf.astar import Astar
 from global_values import SCREEN_WIDTH, SCREEN_HEIGHT, CELL_SIZE
 from pf.pathfinding import Pathfind
+from score_keeper import ScoreKeeper
+from ui.button_functions import ButtonFunctionHolder
+from ui.highscore import Highscore
+from config import SCORES_FILE
+from repositories.score_repository import ScoreRepository
 
 pygame.init() # pylint: disable=no-member
 
 def main():
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    screps = ScoreRepository(SCORES_FILE)
     cells = Cells(0)
     user_input = UserInput()
-
+    butt_funcs = ButtonFunctionHolder(user_input)
+    score = ScoreKeeper(10, 0.001)
     base = Base(SCREEN_WIDTH - 100, SCREEN_HEIGHT/2, 96, 51, "base96x51.png")
     #cells.change_cells_to(base.rect.x, base.rect.y, base.rect, 1)
     astar = Astar(cells)
@@ -32,16 +39,17 @@ def main():
     clock = Clock()
     wave = Wave(1, 1, 2000, 50, 300)
     pathfinder = Pathfind(cells, astar)
-    level = Level(wave, cells, 10, astar, pathfinder)
+    level = Level(wave, cells, 10, astar, pathfinder, score)
     highlight = Highlight(1, 1)
     level.highlights.add(highlight)
     level.environment.add(base)
 
-    butt = Button(10, 530, "tykki_nappi.png", 70, 70, user_input.flip_one)
+    butt = Button(10, 530, "tykki_nappi.png", 70, 70, butt_funcs.flip_one)
     level.buttons.add(butt)
     notif = Notification(SCREEN_WIDTH, SCREEN_HEIGHT, screen)
-    menu = Menu()
-    menu.menu_initialization(user_input)
+    hiscore = Highscore(300, 400)
+    menu = Menu(hiscore)
+    menu.menu_initialization(butt_funcs)
 
     level._initialize_sprites() # pylint: disable=protected-access
     renderer = Renderer(screen, level, menu)

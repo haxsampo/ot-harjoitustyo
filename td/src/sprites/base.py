@@ -14,7 +14,6 @@ class Base(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = pos_x
         self.rect.y = pos_y
-        print("BASE: ", self.rect.x, self.rect.y)
 
     def update(self, level):
         """

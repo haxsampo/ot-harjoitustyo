@@ -10,7 +10,8 @@ class Highlight(pygame.sprite.Sprite):
         Args:
         '''
         super().__init__()
-        self.image = load_image("hl.png")
+        self.image = load_image("tower.png")
+        self.image.set_alpha(100)
         self.image.set_colorkey((255, 255, 255))
         self.surf = pygame.Surface((5, 5))
         self.surf.blit(self.image, (x, y))

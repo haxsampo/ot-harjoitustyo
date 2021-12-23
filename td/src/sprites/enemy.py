@@ -34,7 +34,7 @@ class Enemy(pygame.sprite.Sprite):
         towers (pygame.sprite.group): all towers in level
         """
         self.check_health()
-        self.enemy_move(towers, level)
+        self.enemy_move()
 
     def check_health(self):
         """
@@ -57,14 +57,11 @@ class Enemy(pygame.sprite.Sprite):
         """
         return pygame.sprite.spritecollide(self, towers, False)
 
-    def enemy_move(self, towers, level):
+    def enemy_move(self):
         """
         Args:
         """
-        #tsekkaa onko currenttiin etäisyyttä
-            #jos ei niin päivitä current
-        #move to current
-        self.update_target_coords(level)
+        self.update_target_coords()
         self.move_towards(self.path[self.path_index])
         """ self.rect.x += 1
         if not self.enemy_tower_collision(towers):
@@ -73,12 +70,10 @@ class Enemy(pygame.sprite.Sprite):
             self.rect.y += 1
             self.rect.x -= 1 """
 
-    def update_target_coords(self, level):
+    def update_target_coords(self):
         """
         Checks whether enemy is close to the goal, and updates if closer than 0.5
         """
-        #if path_index > len(path):
-        #    self.path
         target_x = self.path[self.path_index][0]
         target_y = self.path[self.path_index][1]
         dif_x, dif_y = target_x - self.rect.x, target_y - self.rect.y

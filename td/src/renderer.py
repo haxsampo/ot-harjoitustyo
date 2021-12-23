@@ -49,5 +49,5 @@ class Renderer:
         background_rgb ((int, int, int))
         '''
         self._display.fill(background_rgb)
-        self._menu.all_sprites.draw(self._display)
+        self._menu.menu_render(self._display)
         pygame.display.update()

@@ -25,11 +25,11 @@ class UserInput:
             game_loop._notification.change_label("paused", (30, 30, 32))
             return
         if event_key == K_1:
-            self.flip_one()
+            self.one_active ^= 1
         if event_key == K_g:
             game_loop._level.set_lives(0)
 
-    def mouse_button_check(self, event_x, event_y, buttons, game_loop):
+    def mouse_button_check(self, event_x, event_y, buttons, game_loop, scene_obj):
         '''
         Args:
         buttons (pygame.sprite.SpriteGroup)
@@ -37,16 +37,19 @@ class UserInput:
         ret = 0
         for button in buttons:
             if button.rect.collidepoint(event_x, event_y):
-                sig = signature(button.func)
-                if len(sig.parameters) >= 1:
-                    button.run_func(game_loop)
-                else:
-                    button.run_func()
+                #sig = signature(button.func)
+                #if len(sig.parameters) >= 1:
+                button.run_func({'game_loop':game_loop,
+                                 "button_value":button.button_value,
+                                 'user_input':self,
+                                 'scene_obj':scene_obj})
+                #else:
+                #    button.run_func()
                 ret = 1
         return ret
 
     #pura esim seuraaviin: rakennustsek, rakenna torni
-    def handle_mouse(self, event_x, event_y, scene, level, game_loop=None):
+    def handle_mouse(self, event_x, event_y, scene_str, scene_obj, game_loop=None):
         '''
         Args:
         event_x (int): pos x of click in pixels
@@ -55,19 +58,16 @@ class UserInput:
         level (class Menu or class Level):
         '''
         print("event pos:", event_x, event_y)
-        if scene == "menu":
-            self.mouse_button_check(event_x, event_y, level.main_buttons, game_loop)
+        if scene_str == "menu":
+            self.mouse_button_check(event_x, event_y, scene_obj.main_buttons, game_loop, scene_obj)
             return
-        if scene == "level":
-            button_coll = self.mouse_button_check(event_x, event_y, level.buttons, game_loop)
+        if scene_str == "level":
+            button_coll = self.mouse_button_check(event_x, event_y, scene_obj.buttons, game_loop)
             if button_coll:
                 return
 
             if self.one_active:
-                self.build_tower(event_x, event_y, level)
-            else:
-                print("pim naks")
-                
+                self.build_tower(event_x, event_y, scene_obj)
 
     def build_tower(self, event_x, event_y, level):
         """
@@ -79,20 +79,23 @@ class UserInput:
         """
         twr_x = int(event_x - (event_x % 5))
         twr_y = int(event_y - (event_y % 5))
-
         tmp_rect = pygame.Rect(event_x, event_y, 50, 50)
-
         twr_in_bounds = level.cells.tower_in_bounds(event_x, event_y, tmp_rect)
         if twr_in_bounds:
             twr_fits = level.cells.tower_fits(event_x, event_y, tmp_rect)
             enviro_overlap = self.rect_overlap(tmp_rect, level.environment)
-            if twr_fits and not enviro_overlap:
+            enemy_overlap = self.rect_overlap(tmp_rect, level.enemies)
+            if twr_fits and not enviro_overlap and not enemy_overlap:
                 level.cells.change_cells_to(event_x, event_y, tmp_rect, 1)
                 tower = Tower(twr_x, twr_y, "tower.png", 5, 5, 250, 1000, level)
                 level.towers.add(tower)
                 level._initialize_sprites()
                 level.pathfinder.update_paths(level.enemies, level.end)
-                level.path = level.pathfinder.calc_path(level.start, level.end)
+                path_exists = level.pathfinder.calc_path(level.start, level.end)
+                if path_exists:
+                    level.path = path_exists
+                else:
+                    print("tower would block path")
             else:
                 print("tower doesn't fit :(")
         else:
@@ -112,20 +115,3 @@ class UserInput:
                 overlap = True
         return overlap
 
-    def new_game(self, args=None):
-        '''
-        starts a new game
-        '''
-        args.scene = "level"
-
-    def exit(self, args=None):
-        '''
-        reh
-        '''
-        args.running = False
-
-    def flip_one(self):
-        '''
-        flips the value of one_active
-        '''
-        self.one_active ^= 1

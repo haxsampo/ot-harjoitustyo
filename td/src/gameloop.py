@@ -1,5 +1,5 @@
 import pygame
-from global_values import *
+from global_values import KEYDOWN, MOUSEBUTTONDOWN, QUIT
 
 class GameLoop:
     '''
@@ -14,6 +14,8 @@ class GameLoop:
         self.notification = notification
         self._menu = menu
         self.scene = "menu"
+        self.level_entered = False
+        self.level_over_once = False
 
     def start(self):
         '''
@@ -25,6 +27,8 @@ class GameLoop:
                 self.level_scene()
             elif self.scene == "menu":
                 self.menu_scene()
+            elif self.scene == "scores":
+                self.scores_scene()
             if not self.running:
                 pygame.quit() # pylint: disable=no-member
                 exit()
@@ -36,10 +40,19 @@ class GameLoop:
         self._menu_events()
         self._renderer.main_menu_render((20, 180, 190))
 
+    def scores_scene(self):
+        """
+        """
+        self._scores_events()
+        
+
     def level_scene(self):
         '''
         Args:
         '''
+        if not self.level_entered:
+            self.level_entered = True
+            self._level.score.level_start(self._clock.get_ticks())
         self._handle_events()
         if self._level.lives <= 0:
             self.level_over()
@@ -72,7 +85,9 @@ class GameLoop:
         '''
         args:
         '''
-        for event in pygame.event.get():
+        events = pygame.event.get()
+        self._menu.txt_input.update(events)
+        for event in events:
             if event.type == QUIT:
                 self.running = False
             if event.type == MOUSEBUTTONDOWN:
@@ -83,6 +98,10 @@ class GameLoop:
         '''
         args:
         '''
+        if not self.level_over_once:
+            time_score = self._level.score.survival_time_count(self._clock.get_ticks())
+            totalscore = self._level.score.score + time_score
+            self._level.score.score = totalscore
+            self.level_over_once = True
         self._user_input.pause = 1
-        self.notification.change_label("game over :(")
-
+        self.notification.change_label("game over :("+str(self._level.score.score))
