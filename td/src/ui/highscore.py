@@ -29,3 +29,12 @@ class Highscore:
             textpos = self.text.get_rect(centerx=SCREEN_WIDTH/2+100, y=50+20*i)
             display.blit(text, textpos)
             i += 1
+
+    def update_highscores(self, new_scores):
+        """
+        Replaces empty hiscore with a phrase
+        """
+        if not new_scores:
+            self.scores_list = ["Once you play", "highscores will be", "displayed here"]
+        else:
+            self.scores_list = new_scores

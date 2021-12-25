@@ -37,7 +37,7 @@ class Level:
             current_time (int): milliseconds since pygame.init() was called
         """
         self.environment.update(self)
-        self.enemies.update(self.towers, self)
+        self.enemies.update()
         self.towers.update(self.enemies, current_time)
         self.projectiles.update()
         self.wave.update(current_time, self)

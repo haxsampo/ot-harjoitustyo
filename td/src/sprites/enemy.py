@@ -28,10 +28,9 @@ class Enemy(pygame.sprite.Sprite):
         self.health = health
         self.speed = speed
 
-    def update(self, towers, level):
+    def update(self):
         """
         Args:
-        towers (pygame.sprite.group): all towers in level
         """
         self.check_health()
         self.enemy_move()

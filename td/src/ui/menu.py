@@ -6,11 +6,14 @@ class Menu:
     """
     Args:
     """
-    def __init__(self, highscore):
+    def __init__(self, highscore, repo):
         self.buttons = pygame.sprite.Group()
         self.all_sprites = pygame.sprite.Group()
         self.highscore = highscore
-        self.txt_input = pygame_textinput.TextInputVisualizer()
+        self.repo = repo
+        self.manager = pygame_textinput.TextInputManager(
+            validator=lambda input: len(input) <= 15 and (input.isalpha() or len(input) == 0))
+        self.text_input = pygame_textinput.TextInputVisualizer(manager=self.manager)
         self.player_name = ""
 
     def _initialize_sprites(self):
@@ -20,14 +23,11 @@ class Menu:
         """
         Creates buttons for the main menu
         Args:
-        menu (class Menu):
-        user_input (class UserInput)
+        butt_funcs (class ButtonFunctionHolder)
         """
         start_butt = Button(30, 20, "menu_start.png", 327, 90, butt_funcs.change_scene, "level")
-        #score_butt = Button(30, 180, "highscore.png", 327, 90, butt_funcs.change_scene, "scores")
         exit_butt = Button(30, 120, "main_menu_exit.png", 327, 90, butt_funcs.exit, False)
         self.buttons.add(start_butt)
-        #self.main_buttons.add(score_butt)
         self.buttons.add(exit_butt)
         self._initialize_sprites()
 
@@ -36,5 +36,5 @@ class Menu:
         Rendering of menu items
         """
         self.highscore.score_render(display)
-        display.blit(self.txt_input.surface, (30, 450))
+        display.blit(self.text_input.surface, (30, 550))
         self.all_sprites.draw(display)

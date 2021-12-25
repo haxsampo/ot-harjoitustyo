@@ -1,23 +1,23 @@
 import pygame
 from inspect import signature
 from sprites.tower import Tower
-from global_values import *
+from global_values import K_ESCAPE, K_p, K_1, K_g
 
 class UserInput:
-    '''
+    """
     Handles user input, remembers what keys have been pressed etc
-    '''
+    """
 
     def __init__(self):
         self.one_active = 0
         self.pause = 0
 
     def key_handler(self, event_key, game_loop):
-        '''
+        """
         Args:
         event_key (pygame.key): pressed key
         game_loop (GameLoop): current running gameloop class
-        '''
+        """
         if event_key == K_ESCAPE:
             game_loop.running = False
         if event_key == K_p:
@@ -30,21 +30,20 @@ class UserInput:
             game_loop._level.set_lives(0)
 
     def mouse_button_check(self, event_x, event_y, buttons, game_loop, scene_obj, scene_str):
-        '''
+        """
         Args:
         buttons (pygame.sprite.SpriteGroup)
-        '''
+        Returns:
+        value 0 or 1 to tell handle_mouse whether event hit a button or not
+        """
         ret = 0
         for button in buttons:
             if button.rect.collidepoint(event_x, event_y):
-                #sig = signature(button.func)
-                #if len(sig.parameters) >= 1:
                 button.run_func({'game_loop':game_loop,
                                  "button_value":button.button_value,
                                  'user_input':self,
-                                 'scene_obj':scene_obj})
-                #else:
-                #    button.run_func()
+                                 'scene_obj':scene_obj,
+                                 'scene_str':scene_str})
                 ret = 1
         return ret
 
@@ -112,4 +111,3 @@ class UserInput:
             if rect.colliderect(sprite.rect):
                 overlap = True
         return overlap
-

@@ -29,7 +29,7 @@ class Button(pygame.sprite.Sprite):
         self.button_value = button_value
 
     def run_func(self, *kwargs):
-        '''
+        """
         Runs the function given in init
-        '''
+        """
         self.func(*kwargs)

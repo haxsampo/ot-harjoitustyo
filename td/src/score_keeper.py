@@ -20,9 +20,10 @@ class ScoreKeeper:
 
     def killed_enemy(self):
         """
+        Raise score by dead_enemy_value
         """
         self.score += self.dead_enemy_value
-    
+
     def survival_time_count(self, ticks):
         """
         Return:
