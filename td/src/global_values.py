@@ -5,7 +5,7 @@ ALFA = (255, 255, 55)
 OPPONENT_UNIT_SIZE = 50 #in pixels
 POINTS_PER_FRAME = 0.001
 ENEMY_KILL_SCORE = 10
-LIVES = 1
+LIVES = 100
 
 from pygame.locals import (# pylint: disable=no-name-in-module
     K_UP, 

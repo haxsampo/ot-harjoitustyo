@@ -34,7 +34,6 @@ def main():
     butt_funcs = ButtonFunctionHolder(user_input)
     score = ScoreKeeper(ENEMY_KILL_SCORE, POINTS_PER_FRAME)
     base = Base(SCREEN_WIDTH - 100, SCREEN_HEIGHT/2, 96, 51, "base96x51.png")
-    #cells.change_cells_to(base.rect.x, base.rect.y, base.rect, 1)
     astar = Astar(cells)
     pygame.display.flip()
     clock = Clock()
@@ -52,7 +51,7 @@ def main():
     menu = Menu(hiscore, repo)
     menu.menu_initialization(butt_funcs)
 
-    level._initialize_sprites() # pylint: disable=protected-access
+    level.initialize_sprites() # pylint: disable=protected-access
     renderer = Renderer(screen, level, menu)
     game_loop = GameLoop(clock, renderer, level, user_input, notif, menu, repo)
     game_loop.start()

@@ -43,7 +43,7 @@ class Level:
         self.wave.update(current_time, self)
         self.highlights.update()
 
-    def _initialize_sprites(self):
+    def initialize_sprites(self):
         """
         Args:
         """

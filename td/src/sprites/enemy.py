@@ -62,12 +62,6 @@ class Enemy(pygame.sprite.Sprite):
         """
         self.update_target_coords()
         self.move_towards(self.path[self.path_index])
-        """ self.rect.x += 1
-        if not self.enemy_tower_collision(towers):
-            return
-        else:
-            self.rect.y += 1
-            self.rect.x -= 1 """
 
     def update_target_coords(self):
         """

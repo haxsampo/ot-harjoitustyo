@@ -1,11 +1,13 @@
 import pygame
 from inspect import signature
 from sprites.tower import Tower
+from tower_values import tower1
 from global_values import K_ESCAPE, K_p, K_1, K_g
 
 class UserInput:
     """
     Handles user input, remembers what keys have been pressed etc
+    Values are changed via butt_funcs and here
     """
 
     def __init__(self):
@@ -76,17 +78,23 @@ class UserInput:
         """
         twr_x = int(event_x - (event_x % 5))
         twr_y = int(event_y - (event_y % 5))
-        tmp_rect = pygame.Rect(event_x, event_y, 50, 50)
+        tmp_rect = pygame.Rect(event_x, event_y, tower1['size_x'], tower1['size_y'])
         twr_in_bounds = level.cells.tower_in_bounds(event_x, event_y, tmp_rect)
         if twr_in_bounds:
             twr_fits = level.cells.tower_fits(event_x, event_y, tmp_rect)
-            enviro_overlap = self.rect_overlap(tmp_rect, level.environment)
-            enemy_overlap = self.rect_overlap(tmp_rect, level.enemies)
-            if twr_fits and not enviro_overlap and not enemy_overlap:
+            spritegroups = [level.environment, level.enemies, level.buttons]
+            sprites_overlap = self._spritegroup_overlap(tmp_rect, spritegroups)
+            if twr_fits and not sprites_overlap:
                 level.cells.change_cells_to(event_x, event_y, tmp_rect, 1)
-                tower = Tower(twr_x, twr_y, "tower.png", 5, 5, 250, 1000, level)
+                tower = Tower(twr_x, twr_y,
+                              tower1['img_name'],
+                              tower1['size_x'],
+                              tower1['size_y'],
+                              tower1['shoot_range'],
+                              tower1['shoot_cd'],
+                              level)
                 level.towers.add(tower)
-                level._initialize_sprites()
+                level.initialize_sprites()
                 level.pathfinder.update_paths(level.enemies, level.end)
                 path_exists = level.pathfinder.calc_path(level.start, level.end)
                 if path_exists:
@@ -111,3 +119,10 @@ class UserInput:
             if rect.colliderect(sprite.rect):
                 overlap = True
         return overlap
+
+    def _spritegroup_overlap(self, rect, list_of_spritegroups):
+        for sprite_group in list_of_spritegroups:
+            group_overlap = self.rect_overlap(rect, sprite_group)
+            if group_overlap:
+                return True
+        return False

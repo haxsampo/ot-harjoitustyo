@@ -8,17 +8,15 @@ class Tower(pygame.sprite.Sprite):
     Args:
     shoot_cd in ms
     '''
-    def __init__(self, x, y, img_name, size_x, size_y, shoot_range, shoot_cd, level):
+    def __init__(self, pos_x, pos_y, img_name, size_x, size_y, shoot_range, shoot_cd, level):
         super().__init__()
         self.image = load_image(img_name)
         self.image.set_colorkey((255, 255, 255))
         self.surf = pygame.Surface((size_x, size_y))
-        #self.surf = pygame.transform.scale(self.surf, (size_x,size_y))
-        # self.surf.blit(self.image,(x-(size_x/2),y-(size_y/2)))
-        self.surf.blit(self.image, (x, y))
+        self.surf.blit(self.image, (pos_x, pos_y))
         self.rect = self.image.get_rect()
-        self.rect.x = x
-        self.rect.y = y
+        self.rect.x = pos_x
+        self.rect.y = pos_y
         self.range = shoot_range
         self.last_shot_time = -10
         self.shoot_cd = shoot_cd

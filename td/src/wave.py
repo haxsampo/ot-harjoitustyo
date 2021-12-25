@@ -29,4 +29,4 @@ class Wave:
             if self.enemies_per_wave >= self.enemies_spawned:
                 gandalf = Enemy(self.pos_x, self.pos_y, "gandalf.png", 20, level.path)
                 level.enemies.add(gandalf)
-                level._initialize_sprites()
+                level.initialize_sprites()

@@ -1,4 +1,3 @@
-import pygame
 from pf.cell import Cell
 from global_values import SCREEN_HEIGHT, SCREEN_WIDTH, CELL_SIZE
 
@@ -6,14 +5,20 @@ class Cells:
     """
     Creates a list of lists that represent CELL_SIZE sized cells.
     The values in the lists represent whether the cell is blocked for building and pathing purposes.
-    Args:
-    initial_value (int): what value cells shall be given in initialization
     """
 
-    def __init__(self, initial_value):
-        self.cells = [0]* int(SCREEN_HEIGHT/CELL_SIZE)
+    def __init__(self, initial_value, scrn_height=SCREEN_HEIGHT,
+                 scrn_width=SCREEN_WIDTH, cell_size=CELL_SIZE):
+        """
+        Args:
+        initial_value (int): what value cells shall be given in initialization
+        scrn_height (int): default from global_values, defines cells y len
+        scrn_width (int):default from global_values, defines cells x len
+        cell_size:default from global_values, defines the size of on rectangular cell
+        """
+        self.cells = [0]* int(scrn_height/cell_size)
         for i in range(0, len(self.cells), 1):
-            x_list = [initial_value] * int(SCREEN_WIDTH/CELL_SIZE)
+            x_list = [initial_value] * int(scrn_width/cell_size)
             self.cells[i] = x_list
 
     def cell_value(self, x_pos, y_pos):
@@ -32,6 +37,8 @@ class Cells:
 
         x_cellified = int((x_pos - (x_pos % CELL_SIZE))/CELL_SIZE)
         y_cellified = int((y_pos - (y_pos % CELL_SIZE))/CELL_SIZE)
+        if x_cellified > len(self.cells[0]) or y_cellified > len(self.cells):
+            return 1
         ret_val = self.cells[y_cellified][x_cellified]
         return ret_val
 
@@ -56,10 +63,14 @@ class Cells:
         tower_rect (pygame.Rect):
         Returns true if it fits, False if it doesn't
         """
+        #len_x = x_pos + tower_rect.width
+        #len_y = y_pos + tower_rect.height
+        #if len_x > SCREEN_WIDTH or len_y > SCREEN_HEIGHT:
+        #    return False
+        if not self.tower_in_bounds(x_pos, y_pos, tower_rect):
+            return False
         x_cellified = int((x_pos - (x_pos % 5))/5)
         y_cellified = int((y_pos - (y_pos % 5))/5)
-        #main_cell = self.cells[y_cellified][x_cellified]
-        #10*10 alueelta kaikki hmm miten
         tower_cell_width = int(tower_rect.width / CELL_SIZE)
         tower_cell_height = int(tower_rect.height / CELL_SIZE)
         ret_val = True
@@ -74,6 +85,8 @@ class Cells:
     def change_cells_to(self, x_pos, y_pos, rect_area, value):
         """
         Changes cell values of given area to given value
+        Does not check whether the rect fits or not, use tower_fits()
+            and tower_in_bounds() for that
         Args:
         x_pos, y_pos (int): click values, starting cell calculated from these
         rect_area (pygame.Rect): what area do we want to cover to be changed
@@ -111,14 +124,21 @@ class Cells:
         Return:
         list of class Cell
         """
+        #pois negatiiviset arvot,
+        #pois liian isot arvot
         x_pos = location[0]
         y_pos = location[1]
-        left = (x_pos-5, y_pos)
-        up_ = (x_pos, y_pos-5)
-        right = (x_pos+5, y_pos)
-        down = (x_pos, y_pos+5)
-        #left = Cell(x_pos-1, location[1], self.cells[location[1]][location[0]-1])
-        #up_ = Cell(x_pos, location[1]-1, self.cells[location[1]-1][location[0]])
-        #right = Cell(x_pos+1, location[1], self.cells[location[1]][location[0]+1])
-        #down = Cell(location[0], location[1]+1, self.cells[location[1]+1][location[0]])
-        return [left, right, up_, down]
+        ret = []
+        if x_pos-5 >= 0:
+            left = (x_pos-5, y_pos)
+            ret.append(left)
+        if y_pos+5 >= 0:
+            up_ = (x_pos, y_pos-5)
+            ret.append(up_)
+        if x_pos+5 <= SCREEN_WIDTH:
+            right = (x_pos+5, y_pos)
+            ret.append(right)
+        if y_pos+5 <= SCREEN_HEIGHT:
+            down = (x_pos, y_pos+5)
+            ret.append(down)
+        return ret

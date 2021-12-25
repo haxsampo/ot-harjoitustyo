@@ -57,5 +57,17 @@ class Pathfind:
             x_pos = int(enemy.rect.x - (enemy.rect.x % CELL_SIZE))
             y_pos = int(enemy.rect.y -(enemy.rect.y % CELL_SIZE))
             new_path = self.calc_path((x_pos, y_pos), end)
+            if not new_path:
+                new_path = self.force_path_find(x_pos, y_pos, new_path, end)
             enemy.path = new_path
             enemy.path_index = 0
+
+    def force_path_find(self,x_pos, y_pos, new_path, end):
+        """
+        force new pathing if pathing resolves no none
+        """
+        for i in range(10):
+            print("forcepath",i)
+            if not new_path:
+                new_path = self.calc_path((x_pos, y_pos), end)
+        return new_path
