@@ -7,6 +7,7 @@
 /td/src/sprites/__pycache__/
 
 .vscode
+.csv
 .DS_Store
 .coverage
 .pytest_cache
