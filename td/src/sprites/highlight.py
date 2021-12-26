@@ -3,13 +3,13 @@ from services.load_image import load_image
 from global_values import CELL_SIZE
 
 class Highlight(pygame.sprite.Sprite):
-    '''
+    """
     Args:
-    '''
+    """
     def __init__(self, x_pos, y_pos):
-        '''
+        """
         Args:
-        '''
+        """
         super().__init__()
         self.image = load_image("tower.png")
         self.image.set_alpha(100)
@@ -21,9 +21,9 @@ class Highlight(pygame.sprite.Sprite):
         self.rect.y = y_pos
 
     def update(self):
-        '''
+        """
         Args:
-        '''
+        """
         pos = pygame.mouse.get_pos()
         mouse_y = pos[1]
         mouse_x = pos[0]

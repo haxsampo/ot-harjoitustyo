@@ -20,7 +20,7 @@ from ui.notifications import Notification
 from config import SCORES_FILE
 from repositories.score_repository import ScoreRepository
 
-pygame.init()
+pygame.init() # pylint: disable=no-member
 
 def main():
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -30,6 +30,7 @@ def main():
     butt_funcs = ButtonFunctionHolder(user_input)
     score = ScoreKeeper(ENEMY_KILL_SCORE, POINTS_PER_FRAME)
     base = Base(SCREEN_WIDTH - 100, SCREEN_HEIGHT/2, 96, 51, "base96x51.png")
+    butt = Button(10, 530, "tykki_nappi.png", 70, 70, butt_funcs.flip_one)
     astar = Astar()
     pygame.display.flip()
     clock = Clock()
@@ -40,7 +41,7 @@ def main():
     level.highlights.add(highlight)
     level.environment.add(base)
 
-    butt = Button(10, 530, "tykki_nappi.png", 70, 70, butt_funcs.flip_one)
+    
     level.buttons.add(butt)
     notif = Notification(SCREEN_WIDTH, SCREEN_HEIGHT, screen)
     hiscore = Highscore(300, 400)

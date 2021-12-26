@@ -25,10 +25,6 @@ class Renderer:
             tower.draw_range(self._display)
         pygame.display.update()
 
-    #def path_painter(self):
-    #    for pos in self._level.path:
-    #        self._display.set_at(pos, (254, 254, 254))
-
     def conditional_renders(self, user_input, notifs):
         """
         Checks user input before rendering

@@ -37,7 +37,6 @@ class Cells:
             return 1
         if x_pos > self.scrn_width or y_pos > self.scrn_height:
             return 1
-
         x_cellified = int((x_pos - (x_pos % self.cell_size))/self.cell_size)
         y_cellified = int((y_pos - (y_pos % self.cell_size))/self.cell_size)
         if x_cellified > len(self.cells[0])-1 or y_cellified > len(self.cells)-1:

@@ -3,7 +3,7 @@ from services.load_image import load_image
 
 class Base(pygame.sprite.Sprite):
     """
-    raahraahblääh
+    The aim of the enemies
     """
     def __init__(self, pos_x, pos_y, size_x, size_y, img_name):
         super().__init__()
