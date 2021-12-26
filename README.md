@@ -23,7 +23,7 @@ Harjoitustyön aiheena on tower defence -tyyppinen peli.
 poetry install
 ```
 
-3. Käynnistä sovellus
+2. Käynnistä sovellus
 
 ```bash
 poetry run invoke start
@@ -43,7 +43,7 @@ Testikattavuus
 poetry run invoke coverage-report
 ```
 
--> _htmlcov_
+Kattavuusraportit ja muut löytyy _htmlcov_ kansiosta
 
 ###
 
