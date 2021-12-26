@@ -1,1 +1,1 @@
-#This is here so the folder is noticed by git
+#The picture is in this folder so the folder is noticed by git
