@@ -1,5 +1,7 @@
 from pathlib import Path
 import csv
+import os
+from os.path import dirname, abspath
 from repositories.name_validation import NameValidator
 
 class ScoreRepository:
@@ -12,6 +14,12 @@ class ScoreRepository:
         file_path (string): path to the file that holds dada
         """
         self.validator = NameValidator()
+        dirr = Path(__file__).resolve().parents[2]
+        dirr = str(dirr)+"\data"
+        #print("DIRRRRR", dirr+"\data")
+        exists = os.path.exists(dirr)
+        if not exists:
+            os.makedirs(dirr)
         self._file_path = file_path
         self._ensure_file_exists()
 
@@ -67,7 +75,6 @@ class ScoreRepository:
         Returns:
         List of 10 highest score tuples
         """
-        print(names_scores)
         names_scores = self._remove_empties(names_scores)
         sorted_by_second_value = sorted(names_scores, key=lambda tup: tup[1], reverse=True)
         return sorted_by_second_value[:10]
