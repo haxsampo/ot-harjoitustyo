@@ -1,5 +1,6 @@
 import pygame
 from services.load_image import load_image
+from global_values import CELL_SIZE
 
 class Highlight(pygame.sprite.Sprite):
     '''
@@ -26,5 +27,5 @@ class Highlight(pygame.sprite.Sprite):
         pos = pygame.mouse.get_pos()
         mouse_y = pos[1]
         mouse_x = pos[0]
-        self.rect.x = mouse_x - (mouse_x % 5)
-        self.rect.y = mouse_y - (mouse_y % 5)
+        self.rect.x = mouse_x - (mouse_x % CELL_SIZE)
+        self.rect.y = mouse_y - (mouse_y % CELL_SIZE)

@@ -1,7 +1,7 @@
 import unittest
 from pf.astar import Astar
 from pf.pathfinding import Pathfind
-from cells import Cells
+from entities.cells import Cells
 from global_values import CELL_SIZE
 
 class TestPathfind(unittest.TestCase):

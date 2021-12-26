@@ -1,17 +1,20 @@
 import pygame
 from sprites.tower import Tower
 from tower_values import tower1
-from global_values import K_ESCAPE, K_p, K_1, K_g, K_2, SCREEN_WIDTH, SCREEN_HEIGHT
+from global_values import K_ESCAPE, K_p, K_1, K_g
 
 class UserInput:
     """
     Handles user input, remembers what keys have been pressed etc
     Values are changed via butt_funcs and here
+    current_tower idea is to be the hinge to change that, will cause different
+        values to be used when building tower - see _actually_build_tower()
     """
 
     def __init__(self):
         self.one_active = 0
         self.pause = 0
+        self.current_tower = tower1
 
     def key_handler(self, event_key, game_loop):
         """
@@ -67,6 +70,14 @@ class UserInput:
         if self.one_active:
             self.build_tower(event_x, event_y, scene_obj)
 
+    def _gather_tower_build_errors(self, errs_list):
+        error = ""
+        for tuple in errs_list:
+            if tuple[0]:
+                error = error+tuple[1]+", "
+        if len(error) > 0:
+            print(error)
+
     def build_tower(self, event_x, event_y, level):
         """
         Checks whether new tower fits in by checking
@@ -79,11 +90,16 @@ class UserInput:
         Updates level level.path
         Args:
         """
+        errors = []
         twr_x = int(event_x - (event_x % 5))
         twr_y = int(event_y - (event_y % 5))
         tmp_rect = pygame.Rect(event_x, event_y, tower1['size_x'], tower1['size_y'])
         twr_in_bounds = level.cells.tower_in_bounds(event_x, event_y, tmp_rect)
-        error = ""
+        dicks = {'event_x':event_x,
+                 'event_y':event_y,
+                 'tmp_rect':tmp_rect,
+                 'level':level}
+        errors.append((not twr_in_bounds, "tower not in bounds"))
         if twr_in_bounds:
             twr_fits = level.cells.tower_fits(event_x, event_y, tmp_rect)
             spritegroups = [level.environment, level.enemies, level.buttons]
@@ -91,31 +107,38 @@ class UserInput:
             level.cells.change_cells_to(twr_x, twr_y, tmp_rect, 1)
             path_exists = level.pathfinder.calc_path(level.start, level.end)
             level.cells.change_cells_to(twr_x, twr_y, tmp_rect, 0)
+            errors.append((not path_exists, "would block path"))
+            errors.append((sprites_overlap, "sprites overlap"))
+            errors.append((not twr_fits, "tower doesn't fit"))
             if twr_fits and not sprites_overlap and path_exists:
-                level.cells.change_cells_to(event_x, event_y, tmp_rect, 1)
-                tower = Tower((twr_x, twr_y),
-                              tower1['img_name'],
-                              (tower1['size_x'],
-                               tower1['size_y']),
-                              tower1['shoot_range'],
-                              tower1['shoot_cd'],
-                              level)
-                level.towers.add(tower)
-                level.initialize_sprites()
-                level.pathfinder.update_paths(level.enemies, level.end)
-                level.path = path_exists
-            else:
-                if not twr_fits:
-                    error += "- tower doesn't fit -"
-                if sprites_overlap:
-                    error += "-sprites overlap-"
-                if not path_exists:
-                    error += "path doesn't exist"
-        else:
-            error += "-tower not in bounds or -"
-        if len(error) > 0:
-            print(error)
+                self._actually_build_tower(self.current_tower,
+                                           level, path_exists,
+                                           twr_x, twr_y,
+                                           (event_x, event_y), 
+                                           tmp_rect)
+        self._gather_tower_build_errors(errors)
         tmp_rect = None
+
+    def _can_build(self, dict):
+        errors = []
+        twr_in_bounds = dict['level'].cells.tower_in_bounds(dict['event_x'],
+                                                            dict['event_y'],
+                                                            dict['tmp_rect'])
+
+    def _actually_build_tower(self, cur_tower, level,
+                              path_exists, twr_x, twr_y, event_tuple, tmp_rect):
+        level.cells.change_cells_to(event_tuple[0], event_tuple[1], tmp_rect, 1)
+        tower = Tower((twr_x, twr_y),
+                      cur_tower['img_name'],
+                      (cur_tower['size_x'],
+                       cur_tower['size_y']),
+                      cur_tower['shoot_range'],
+                      cur_tower['shoot_cd'],
+                      level)
+        level.towers.add(tower)
+        level.initialize_sprites()
+        level.pathfinder.update_paths(level.enemies, level.end)
+        level.path = path_exists
 
     def rect_overlap(self, rect, sprite_group):
         """

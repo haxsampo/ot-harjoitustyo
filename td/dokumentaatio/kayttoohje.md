@@ -20,13 +20,15 @@ poetry run invoke start
 
 Aseta päävalikossa peli-nimesi pisteitä varten kirjoittamalla.
 
-Peli käynnistyy new game napista
+Peli käynnistyy new game napista.
 
 Valitse hiirellä rakennettava torni.
 
 P-nappi laittaa pelin tauolle.
 
-Esc lopettaa pelin
+G-nappi lopettaa tason kesken siten, että napin painallukseen asti saavutetut pisteet tallentuvat.
+
+Esc sulkee pelin.
 
 config.py tiedostossa voi muuttaa listoja joista peli satunnaistaa nimen, jos pelaaja ei ole antanut nimeä.
 

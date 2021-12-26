@@ -66,15 +66,10 @@ class Cells:
         tower_rect (pygame.Rect):
         Returns true if it fits, False if it doesn't
         """
-        #len_x = x_pos + tower_rect.width
-        #len_y = y_pos + tower_rect.height
-        #if len_x > self.scrn_width or len_y > self.scrn_height:
-        #    return False
+
         if not self.tower_in_bounds(x_pos, y_pos, tower_rect):
             return False
         x_cellified, y_cellified = self.coords_to_cell_values(x_pos, y_pos)
-        #x_cellified = int((x_pos - (x_pos % 5))/5)
-        #y_cellified = int((y_pos - (y_pos % 5))/5)
         tower_cell_width = int(tower_rect.width / self.cell_size)
         tower_cell_height = int(tower_rect.height / self.cell_size)
         ret_val = True
@@ -97,17 +92,50 @@ class Cells:
         value (int): what value the cells should be after the change
         """
         x_cellified, y_cellified = self.coords_to_cell_values(x_pos, y_pos)
-        #x_cellified = int((x_pos - (x_pos % 5))/5)
-        #y_cellified = int((y_pos - (y_pos % 5))/5)
         tower_cell_width = int(rect_area.width / self.cell_size)
         tower_cell_height = int(rect_area.height / self.cell_size)
-        for y__ in range(y_cellified, y_cellified+tower_cell_height):
-            for x__ in range(x_cellified, x_cellified+tower_cell_width):
+        range_for_y = self._roof_for_cell_index(y_cellified, [tower_cell_height], 'y')
+        range_for_x = self._roof_for_cell_index(x_cellified, [tower_cell_width], 'x')
+        for y__ in range(y_cellified, range_for_y):
+            for x__ in range(x_cellified, range_for_x):
                 self.cells[y__][x__] = value
 
+    def _roof_for_cell_index(self, cellified_value, list_to_sum, x_or_y):
+        """
+        x_or_y (str): x or y
+        """
+        max_y = len(self.cells)
+        max_x = len(self.cells[0])
+        total = cellified_value
+        for summ in list_to_sum:
+            total += summ
+        if x_or_y == 'x':
+            if total > max_x:
+                return max_x
+            else:
+                return total
+        else:
+            if total > max_y:
+                return max_y
+            else:
+                return total
+
+
     def coords_to_cell_values(self, x_pos, y_pos):
-        x_cellified = int((x_pos - (x_pos % 5))/5)
-        y_cellified = int((y_pos - (y_pos % 5))/5)
+        """
+        Changes pixel coordinates to cell values
+        """
+        if x_pos < 0 or y_pos < 0:
+            print("passing negative values to cells.coords_to_cell_values")
+            return 0, 0
+        x_cellified = int((x_pos - (x_pos % self.cell_size))/self.cell_size)
+        y_cellified = int((y_pos - (y_pos % self.cell_size))/self.cell_size)
+        if x_pos > self.scrn_width:
+            new_x = self.scrn_width-1
+            x_cellified = int((new_x - (new_x % self.cell_size))/self.cell_size)
+        if y_pos > self.scrn_height:
+            new_y = self.scrn_height -1
+            y_cellified = int((new_y - (new_y % self.cell_size))/self.cell_size)
         return x_cellified, y_cellified
 
     def tower_in_bounds(self, event_x, event_y, rect):
@@ -135,8 +163,6 @@ class Cells:
         Return:
         list of class Cell
         """
-        #pois negatiiviset arvot,
-        #pois liian isot arvot
         x_pos = location[0]
         y_pos = location[1]
         ret = []
@@ -159,7 +185,7 @@ class Cells:
         Takes a sprite list and affirms that the values
         in the sprite rect area are blocked
         sprites (pygame.sprite.group)
-        """ #change_cells_to(self, x_pos, y_pos, rect_area, value):
+        """
         for sprite in sprites:
             self.change_cells_to(sprite.rect.x,
                                  sprite.rect.y,

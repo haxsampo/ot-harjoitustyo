@@ -2,10 +2,6 @@ from invoke import task
 import os
 import platform
 
-@task
-def foo(ctx):
-    print("bar")
-
 @task 
 def start(ctx):
     if platform.system() == 'Windows':
