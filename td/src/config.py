@@ -1,9 +1,18 @@
+import os
+from dotenv import load_dotenv
 """
 Contains database filename & path info
-and random names list
+and random names lists
 """
+dirname = os.path.dirname(__file__)
 
-SCORES_FILE = "data/scores.csv"
+try:
+    load_dotenv(dotenv_path=os.path.join(dirname, '..', '.env'))
+except FileNotFoundError:
+    pass
+
+SCORES_FILENAME = os.getenv('SCORES_FILENAME') or "scores.csv"
+SCORES_FILE = os.path.join(dirname, '..', 'data', SCORES_FILENAME)
 
 random_names_1 = ['jonne',
                   'purjo',

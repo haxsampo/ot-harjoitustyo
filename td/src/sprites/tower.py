@@ -1,5 +1,5 @@
-import pygame
 import math
+import pygame
 from load_image import load_image
 from sprites.projectile import Projectile
 
@@ -8,7 +8,11 @@ class Tower(pygame.sprite.Sprite):
     Args:
     shoot_cd in ms
     """
-    def __init__(self, pos_x, pos_y, img_name, size_x, size_y, shoot_range, shoot_cd, level):
+    def __init__(self, pos, img_name, size, shoot_range, shoot_cd, level):
+        pos_x = pos[0]
+        pos_y = pos[1]
+        size_x = size[0]
+        size_y = size[1]
         super().__init__()
         self.image = load_image(img_name)
         self.image.set_colorkey((255, 255, 255))
@@ -33,7 +37,7 @@ class Tower(pygame.sprite.Sprite):
     def draw_range(self, surf):
         """
         Args:
-        surf (pygame.Surface): wants the game background. 
+        surf (pygame.Surface): wants the game background.
         """
         pygame.draw.circle(surf, (0, 0, 255),
                            (self.rect.x, self.rect.y), self.range, 2)

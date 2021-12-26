@@ -10,12 +10,11 @@ class TestScoreRepository(unittest.TestCase):
     """
 
     def setUp(self):
-        self.a=1
         self.score_rep = ScoreRepository("tests/score_test.csv")
         self.csv_population()
 
     def tearDown(self):
-        a=1
+        pass
         #poista csv
     
     def csv_population(self):

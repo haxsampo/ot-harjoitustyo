@@ -1,5 +1,4 @@
 import pygame
-from inspect import signature
 from sprites.tower import Tower
 from tower_values import tower1
 from global_values import K_ESCAPE, K_p, K_1, K_g, K_2, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -24,7 +23,7 @@ class UserInput:
             game_loop.running = False
         if event_key == K_p:
             self.pause ^= 1
-            game_loop._notification.change_label("paused", (30, 30, 32))
+            game_loop.notification.change_label("paused", (30, 30, 32))
             return
         if event_key == K_1:
             self.one_active ^= 1
@@ -94,10 +93,10 @@ class UserInput:
             level.cells.change_cells_to(twr_x, twr_y, tmp_rect, 0)
             if twr_fits and not sprites_overlap and path_exists:
                 level.cells.change_cells_to(event_x, event_y, tmp_rect, 1)
-                tower = Tower(twr_x, twr_y,
+                tower = Tower((twr_x, twr_y),
                               tower1['img_name'],
-                              tower1['size_x'],
-                              tower1['size_y'],
+                              (tower1['size_x'],
+                               tower1['size_y']),
                               tower1['shoot_range'],
                               tower1['shoot_cd'],
                               level)

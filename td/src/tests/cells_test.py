@@ -1,6 +1,6 @@
+import random
 import unittest
 import pygame
-import random
 from cells import Cells
 from global_values import SCREEN_WIDTH, SCREEN_HEIGHT, CELL_SIZE
 from tower_values import tower1
@@ -59,7 +59,7 @@ class TestCells(unittest.TestCase):
         cells = Cells(0)
         size_x = tower1['size_y']
         size_y = tower1['size_x']
-        rand_x = random.randint(1, SCREEN_WIDTH/CELL_SIZE-1) 
+        rand_x = random.randint(1, SCREEN_WIDTH/CELL_SIZE-1)
         rand_y = random.randint(1, SCREEN_HEIGHT/CELL_SIZE-1)
         tower_rect = pygame.Rect(rand_x, rand_y, size_x, size_y)
         fits = cells.tower_fits(rand_x, rand_y, tower_rect)
@@ -79,21 +79,25 @@ class TestCells(unittest.TestCase):
         self.assertEqual(fits, False)
 
     def test_change_cells_to(self):
+        """
+        tests whether changing cells works
+        """
         cells = Cells(0)
         size_x = tower1['size_y']
         size_y = tower1['size_x']
-        rand_x = 799#random.randint(0, SCREEN_WIDTH) 
+        rand_x = random.randint(0, SCREEN_WIDTH)
         rand_y = random.randint(0, SCREEN_HEIGHT)
         tower_rect = pygame.Rect(rand_x, rand_y, size_x, size_y)
-        #cells.change_cells_to(rand_x, rand_y, tower_rect, 1)
-        #cell_val = cells.cell_value(rand_x, rand_y)
-        #self.assertEqual(cell_val, 1)
-    
+        cells.change_cells_to(rand_x, rand_y, tower_rect, 1)
+        cell_val = cells.cell_value(rand_x, rand_y)
+        self.assertEqual(cell_val, 1)
+
     def test_get_neighbours(self):
         """
-        !
+        checks that the system returns correct amount of neighbours
         """
         cells = Cells(0)
         neibs = cells.get_neighbours((0, 0))
         self.assertEqual(len(neibs), 2)
-        
+        neibs2 = cells.get_neighbours((100, 100))
+        self.assertEqual(len(neibs2), 4)

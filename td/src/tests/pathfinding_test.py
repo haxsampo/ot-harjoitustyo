@@ -1,8 +1,8 @@
 import unittest
 from pf.astar import Astar
-from cells import Cells
 from pf.pathfinding import Pathfind
-from global_values import SCREEN_WIDTH, SCREEN_HEIGHT, CELL_SIZE
+from cells import Cells
+from global_values import CELL_SIZE
 
 class TestPathfind(unittest.TestCase):
     """
@@ -19,7 +19,3 @@ class TestPathfind(unittest.TestCase):
         path = pather.calc_path((0, 0), (99, 0))
         self.assertEqual(len(path), 100/CELL_SIZE)
 
-    def test_path_three_wide(self):
-        cells = Cells(0, CELL_SIZE*3, 100, CELL_SIZE)
-        astar = Astar()
-        pather = Pathfind(cells, astar)

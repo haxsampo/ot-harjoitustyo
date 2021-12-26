@@ -12,13 +12,12 @@ from pf.pathfinding import Pathfind
 from score_keeper import ScoreKeeper
 
 
-class test_enemy(unittest.TestCase):
+class TestEnemy(unittest.TestCase):
     """
     Args:
     """
     def setUp(self):
-        self.test_enemy = Enemy(50, 500, "gandalf.png", 1, [(0,0)])
-        #tee cells ja wave + life(int) ja syötä levelille
+        self.test_enemy = Enemy(50, 500, "gandalf.png", 1, [(0, 0)])
         cells = Cells(0)
         wave = Wave(1, 10, 2000, 50, 300)
         astar = Astar()

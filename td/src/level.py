@@ -1,9 +1,5 @@
-from os import path
 import pygame
-#from sprites.enemy import Enemy
-from load_image import load_image
-from pf.astar import Astar
-from global_values import SCREEN_WIDTH, SCREEN_HEIGHT, CELL_SIZE
+from global_values import SCREEN_WIDTH, SCREEN_HEIGHT
 
 class Level:
     """
