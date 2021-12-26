@@ -3,6 +3,8 @@
 ## Rakenne
 Ohjelman kansiorakenne ja arkkitehtuuri toimii suurinpiirtein seuraavalla tavalla
 
+![Palikat](./td/dokumentaatio/arkkitehtuuri.png)
+
 ui sisältää käyttöliittymään liittyviä elementtejä; services sisältää sovelluslogiikkaa; repositories sisältää sovelluksen tietojen tallentamiseen liittyvää koodia; entities sisältää sovelluksen entiteeteiksi miellettäviä luokkia, jotka eivät ole välttämättä visuaalisia; sprites on pygame.sprite:n periviä entiteettejä; pf sisältää reitinetsintään liittyvän koodin ja luokat
 
 ## Käyttöliittymä
@@ -33,7 +35,7 @@ nimi;pisteet
 
 Kuvataan toimintalogiikkaa hieman sekvenssikaaviolla:
 
-!Linkitä tähän kuva
+![sekvenssi](./td/dokumentaatio/save_sequence.png)
 
 
 ## Ohjelman rakenteeseen jääneet heikkoudet
