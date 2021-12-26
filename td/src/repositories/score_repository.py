@@ -16,7 +16,6 @@ class ScoreRepository:
         self.validator = NameValidator()
         dirr = Path(__file__).resolve().parents[2]
         dirr = str(dirr)+"\data"
-        #print("DIRRRRR", dirr+"\data")
         exists = os.path.exists(dirr)
         if not exists:
             os.makedirs(dirr)
