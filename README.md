@@ -1,4 +1,6 @@
-# OT2021
+# TOWER DEFENCE OT2021
+
+Pelissä on tarkoitus suojata rahkapihaa hyökkääviltä velhoilta.
 
 ## Harjoitustyö
 
