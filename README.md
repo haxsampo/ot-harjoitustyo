@@ -2,6 +2,9 @@
 
 Pelissä on tarkoitus suojata rahkapihaa hyökkääviltä velhoilta.
 
+### Python versiosta & käyttöjärjestelmistä
+Peli testattu windows 10:llä ja cubbli linuxilla. Kummallakin Pythonin versio on ollut +3.8
+
 ## Harjoitustyö
 
 Harjoitustyön aiheena on tower defence -tyyppinen peli.
