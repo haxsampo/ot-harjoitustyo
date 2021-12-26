@@ -38,7 +38,10 @@ class ScoreRepository:
                     s_row = row
                     if ";" in row[0]:
                         s_row = row[0].split(";")
-                    scores.append((s_row[0], float(s_row[1])))
+                    if len(s_row[1]) > 0:
+                        scores.append((s_row[0], float(s_row[1])))
+                    else:
+                        scores.append((s_row[0], s_row[1]))
         return scores
 
     def _ensure_file_exists(self):
@@ -54,10 +57,7 @@ class ScoreRepository:
         validated_name = self.validator.string_validation(name)
         scores.append((validated_name, score))
         best_list = self.calc_ten_best(scores)
-        with open(self._file_path, "w") as file:
-            writer = csv.writer(file)
-            for tuple in best_list:
-                writer.writerow([tuple[0]]+[tuple[1]])
+        self._write(best_list)
 
     def calc_ten_best(self, names_scores):
         """
@@ -67,8 +67,17 @@ class ScoreRepository:
         Returns:
         List of 10 highest score tuples
         """
+        print(names_scores)
+        names_scores = self._remove_empties(names_scores)
         sorted_by_second_value = sorted(names_scores, key=lambda tup: tup[1], reverse=True)
         return sorted_by_second_value[:10]
+
+    def _remove_empties(self, names_score):
+        ret = []
+        for tup in names_score:
+            if not isinstance((tup[1]), str):
+                ret.append(tup)
+        return ret
 
     def find_all_string(self):
         """
@@ -78,3 +87,24 @@ class ScoreRepository:
         tups = self._read()
         ret = list(map(lambda tup: tup[0]+" "+str(tup[1]), tups))
         return ret
+
+    def delete_all(self):
+        """
+        writes empty list
+        """
+        self._write_only([("", "")])
+
+    def _write_only(self, name_scores):
+        self._ensure_file_exists()
+        with open(self._file_path, "w") as file:
+            for names in name_scores:
+                row = f'{names[0]};{names[1]}'
+                file.write(row+'\n')
+
+
+    def _write(self, list_of_tuples):
+        self._ensure_file_exists()
+        with open(self._file_path, "w") as file:
+            writer = csv.writer(file)
+            for tup in list_of_tuples:
+                writer.writerow([tup[0]]+[tup[1]])

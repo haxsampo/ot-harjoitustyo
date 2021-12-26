@@ -24,7 +24,7 @@ def main():
     user_input = UserInput()
     butt_funcs = ButtonFunctionHolder(user_input)
     pygame.display.flip()
-    
+
     cells = Cells(0)
     astar = Astar()
     pathfinder = Pathfind(cells, astar)
