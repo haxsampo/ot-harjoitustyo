@@ -3,6 +3,8 @@
 ## Rakenne
 Ohjelman kansiorakenne ja arkkitehtuuri toimii suurinpiirtein seuraavalla tavalla
 
+![arkkitehtuuri](https://github.com/haxsampo/ot-harjoitustyo/blob/master/td/dokumentaatio/arkkitehtuuri.png)
+
 ui sisältää käyttöliittymään liittyviä elementtejä; services sisältää sovelluslogiikkaa; repositories sisältää sovelluksen tietojen tallentamiseen liittyvää koodia; entities sisältää sovelluksen entiteeteiksi miellettäviä luokkia, jotka eivät ole välttämättä visuaalisia; sprites on pygame.sprite:n periviä entiteettejä; pf sisältää reitinetsintään liittyvän koodin ja luokat
 
 ## Käyttöliittymä
@@ -33,10 +35,11 @@ nimi;pisteet
 
 Kuvataan toimintalogiikkaa hieman sekvenssikaaviolla:
 
-!Linkitä tähän kuva
+![sekvenssi](https://github.com/haxsampo/ot-harjoitustyo/blob/master/td/dokumentaatio/save_sequence.png)
 
 
 ## Ohjelman rakenteeseen jääneet heikkoudet
 - Menu ja level olisi luultavasti abstraktoitavissa skeneksi, jolla on omat renderöitävät objektinsa ja kumpikin passaisi user_inputille tapahtuvat eventit.
 - index tulisi purkaa 
 - pelin päätyttyä olisi ideaalia pystyä palaamaan menuun tai aloittamaan uusi peli
+- vastustajia ja vastustajien instantioimista olisi pitänyt abstraktoida lisää niin, että uusien erilaisten vastustajien lisääminen olisi helpompaa. tornien kohdalla tätä on hieman alustettu.
