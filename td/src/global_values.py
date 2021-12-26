@@ -6,6 +6,7 @@ OPPONENT_UNIT_SIZE = 50 #in pixels
 POINTS_PER_FRAME = 0.001
 ENEMY_KILL_SCORE = 10
 LIVES = 100
+ENEMY_SPAWN_LOCATION = (50, 300)
 
 from pygame.locals import (# pylint: disable=no-name-in-module
     K_UP, 
@@ -18,5 +19,6 @@ from pygame.locals import (# pylint: disable=no-name-in-module
     MOUSEBUTTONDOWN,
     K_1,
     K_p,
-    K_g
+    K_g,
+    K_2
 )

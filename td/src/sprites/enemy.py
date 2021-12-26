@@ -14,6 +14,8 @@ class Enemy(pygame.sprite.Sprite):
         y (int): position on the screen y
         img_name (string): name of the image file
         health (int):
+        path (list of tuples):
+        speed (int)
         """
         super().__init__()
         self.path = path

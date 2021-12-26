@@ -12,20 +12,20 @@ from pf.pathfinding import Pathfind
 from score_keeper import ScoreKeeper
 
 
-class TestEnemy(unittest.TestCase):
+class test_enemy(unittest.TestCase):
     """
     Args:
     """
     def setUp(self):
-        self.testEnemy = Enemy(50, 500, "gandalf.png", 1, [(0,0)])
+        self.test_enemy = Enemy(50, 500, "gandalf.png", 1, [(0,0)])
         #tee cells ja wave + life(int) ja syötä levelille
         cells = Cells(0)
         wave = Wave(1, 10, 2000, 50, 300)
-        astar = Astar(cells)
-        pf = Pathfind(cells, astar)
+        astar = Astar()
+        pf_ = Pathfind(cells, astar)
         score = ScoreKeeper(ENEMY_KILL_SCORE, POINTS_PER_FRAME)
-        self.level = Level(wave, cells, 10, astar, pf, score)
-        self.level.enemies.add(self.testEnemy)
+        self.level = Level(wave, cells, 10, astar, pf_, score)
+        self.level.enemies.add(self.test_enemy)
         self.tower = Tower(100, 500, "tower.png", 50, 50, 250, 1000, self.level)
         self.level.towers.add(self.tower)
 
@@ -33,8 +33,8 @@ class TestEnemy(unittest.TestCase):
         """
         Tests whether enemies can walk into towers
         """
-        initial_coll = self.testEnemy.rect.colliderect(self.tower.rect)
+        initial_coll = self.test_enemy.rect.colliderect(self.tower.rect)
         self.assertEqual(initial_coll, False)
-        self.testEnemy.update()
-        post_move_coll = pygame.sprite.collide_rect(self.testEnemy, self.tower)
+        self.test_enemy.update()
+        post_move_coll = pygame.sprite.collide_rect(self.test_enemy, self.tower)
         self.assertEqual(post_move_coll, False)

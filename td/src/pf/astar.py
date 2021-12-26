@@ -1,10 +1,9 @@
 from pf.priorityqueue import PriorityQueue
-from pf.cell import Cell
-import collections
+from global_values import CELL_SIZE
 
 class Astar:
-    def __init__(self, cells):
-        self.cells = cells
+    def __init__(self):
+        pass
 
     def heuristic(self, pos1, pos2):
         """
@@ -20,8 +19,8 @@ class Astar:
         Implements A* pathfinding algo
         Args:
         cells (class cells)
-        start (tuple):
-        end (tuple):
+        start (tuple(int,int)):
+        end (tuple(int,int)):
 
         """
         frontier = PriorityQueue()
@@ -36,9 +35,8 @@ class Astar:
 
             if current == end:
                 break
-
             for next in cells.get_neighbours(current):
-                next_value = self.cells.cell_value(next[0], next[1])
+                next_value = cells.cell_value(next[0], next[1])
                 if next_value != 0:
                     break
                 new_cost = cost_so_far[current] + 1 

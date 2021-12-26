@@ -60,8 +60,6 @@ class ScoreRepository:
             for tuple in best_list:
                 writer.writerow([tuple[0]]+[tuple[1]])
 
-        print(self.find_all())
-
     def calc_ten_best(self, names_scores):
         """
         Orders list of tuples so that highest first

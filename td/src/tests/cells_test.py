@@ -6,14 +6,14 @@ from global_values import SCREEN_WIDTH, SCREEN_HEIGHT, CELL_SIZE
 from tower_values import tower1
 
 class TestCells(unittest.TestCase):
-    '''
+    """
     Args:
-    '''
+    """
 
     def test_cell_value_when_all_1(self):
-        '''
+        """
         All cells blocked
-        '''
+        """
         cells = Cells(1)
         first = cells.cell_value(1, 1)
         second = cells.cell_value(100, 100)
@@ -23,9 +23,9 @@ class TestCells(unittest.TestCase):
         self.assertEqual(third, 1)
 
     def test_cell_value_if_weird(self):
-        '''
+        """
         Out of bounds inputs
-        '''
+        """
         cells = Cells(1)
         first = cells.cell_value(-1, -1)
         second = cells.cell_value(100000, 100000)
@@ -88,3 +88,12 @@ class TestCells(unittest.TestCase):
         #cells.change_cells_to(rand_x, rand_y, tower_rect, 1)
         #cell_val = cells.cell_value(rand_x, rand_y)
         #self.assertEqual(cell_val, 1)
+    
+    def test_get_neighbours(self):
+        """
+        !
+        """
+        cells = Cells(0)
+        neibs = cells.get_neighbours((0, 0))
+        self.assertEqual(len(neibs), 2)
+        

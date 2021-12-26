@@ -34,7 +34,7 @@ def main():
     butt_funcs = ButtonFunctionHolder(user_input)
     score = ScoreKeeper(ENEMY_KILL_SCORE, POINTS_PER_FRAME)
     base = Base(SCREEN_WIDTH - 100, SCREEN_HEIGHT/2, 96, 51, "base96x51.png")
-    astar = Astar(cells)
+    astar = Astar()
     pygame.display.flip()
     clock = Clock()
     wave = Wave(1, 1, 2000, 50, 300)

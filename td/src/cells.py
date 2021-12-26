@@ -3,7 +3,7 @@ from global_values import SCREEN_HEIGHT, SCREEN_WIDTH, CELL_SIZE
 
 class Cells:
     """
-    Creates a list of lists that represent CELL_SIZE sized cells.
+    Creates a list of lists that represent self.cell_size sized cells.
     The values in the lists represent whether the cell is blocked for building and pathing purposes.
     """
 
@@ -12,13 +12,16 @@ class Cells:
         """
         Args:
         initial_value (int): what value cells shall be given in initialization
-        scrn_height (int): default from global_values, defines cells y len
+        self.scrn_height (int): default from global_values, defines cells y len
         scrn_width (int):default from global_values, defines cells x len
-        cell_size:default from global_values, defines the size of on rectangular cell
+        self.cell_size:default from global_values, defines the size of on rectangular cell
         """
-        self.cells = [0]* int(scrn_height/cell_size)
+        self.scrn_width = scrn_width
+        self.scrn_height = scrn_height
+        self.cell_size = cell_size
+        self.cells = [0]* int(self.scrn_height/self.cell_size)
         for i in range(0, len(self.cells), 1):
-            x_list = [initial_value] * int(scrn_width/cell_size)
+            x_list = [initial_value] * int(scrn_width/self.cell_size)
             self.cells[i] = x_list
 
     def cell_value(self, x_pos, y_pos):
@@ -32,12 +35,12 @@ class Cells:
         """
         if x_pos < 0 or y_pos < 0:
             return 1
-        if x_pos > SCREEN_WIDTH or y_pos > SCREEN_HEIGHT:
+        if x_pos > self.scrn_width or y_pos > self.scrn_height:
             return 1
 
-        x_cellified = int((x_pos - (x_pos % CELL_SIZE))/CELL_SIZE)
-        y_cellified = int((y_pos - (y_pos % CELL_SIZE))/CELL_SIZE)
-        if x_cellified > len(self.cells[0]) or y_cellified > len(self.cells):
+        x_cellified = int((x_pos - (x_pos % self.cell_size))/self.cell_size)
+        y_cellified = int((y_pos - (y_pos % self.cell_size))/self.cell_size)
+        if x_cellified > len(self.cells[0])-1 or y_cellified > len(self.cells)-1:
             return 1
         ret_val = self.cells[y_cellified][x_cellified]
         return ret_val
@@ -65,14 +68,15 @@ class Cells:
         """
         #len_x = x_pos + tower_rect.width
         #len_y = y_pos + tower_rect.height
-        #if len_x > SCREEN_WIDTH or len_y > SCREEN_HEIGHT:
+        #if len_x > self.scrn_width or len_y > self.scrn_height:
         #    return False
         if not self.tower_in_bounds(x_pos, y_pos, tower_rect):
             return False
-        x_cellified = int((x_pos - (x_pos % 5))/5)
-        y_cellified = int((y_pos - (y_pos % 5))/5)
-        tower_cell_width = int(tower_rect.width / CELL_SIZE)
-        tower_cell_height = int(tower_rect.height / CELL_SIZE)
+        x_cellified, y_cellified = self.coords_to_cell_values(x_pos, y_pos)
+        #x_cellified = int((x_pos - (x_pos % 5))/5)
+        #y_cellified = int((y_pos - (y_pos % 5))/5)
+        tower_cell_width = int(tower_rect.width / self.cell_size)
+        tower_cell_height = int(tower_rect.height / self.cell_size)
         ret_val = True
         for y__ in range(y_cellified, y_cellified+tower_cell_height):
             for x__ in range(x_cellified, x_cellified+tower_cell_width):
@@ -92,13 +96,19 @@ class Cells:
         rect_area (pygame.Rect): what area do we want to cover to be changed
         value (int): what value the cells should be after the change
         """
-        x_cellified = int((x_pos - (x_pos % 5))/5)
-        y_cellified = int((y_pos - (y_pos % 5))/5)
-        tower_cell_width = int(rect_area.width / CELL_SIZE)
-        tower_cell_height = int(rect_area.height / CELL_SIZE)
+        x_cellified, y_cellified = self.coords_to_cell_values(x_pos, y_pos)
+        #x_cellified = int((x_pos - (x_pos % 5))/5)
+        #y_cellified = int((y_pos - (y_pos % 5))/5)
+        tower_cell_width = int(rect_area.width / self.cell_size)
+        tower_cell_height = int(rect_area.height / self.cell_size)
         for y__ in range(y_cellified, y_cellified+tower_cell_height):
             for x__ in range(x_cellified, x_cellified+tower_cell_width):
                 self.cells[y__][x__] = value
+
+    def coords_to_cell_values(self, x_pos, y_pos):
+        x_cellified = int((x_pos - (x_pos % 5))/5)
+        y_cellified = int((y_pos - (y_pos % 5))/5)
+        return x_cellified, y_cellified
 
     def tower_in_bounds(self, event_x, event_y, rect):
         """
@@ -110,15 +120,16 @@ class Cells:
         """
         twr_x = int(event_x - (event_x % 5))
         twr_y = int(event_y - (event_y % 5))
-        if rect.width + twr_x > SCREEN_WIDTH:
+        if rect.width + twr_x > self.scrn_width:
             return False
-        if rect.height + twr_y > SCREEN_HEIGHT:
+        if rect.height + twr_y > self.scrn_height:
             return False
         return True
 
     def get_neighbours(self, location):
         """
-        Returns a list of the 4 cell class objects that are to next to the given cell.
+        Returns a list of tuples, given loc neighbour cell left upper corner locations that
+            are within bounds
         Args:
         location ((int,int), tuple): in cells
         Return:
@@ -132,13 +143,25 @@ class Cells:
         if x_pos-5 >= 0:
             left = (x_pos-5, y_pos)
             ret.append(left)
-        if y_pos+5 >= 0:
+        if y_pos-5 >= 0:
             up_ = (x_pos, y_pos-5)
             ret.append(up_)
-        if x_pos+5 <= SCREEN_WIDTH:
+        if x_pos+5 < self.scrn_width:
             right = (x_pos+5, y_pos)
             ret.append(right)
-        if y_pos+5 <= SCREEN_HEIGHT:
+        if y_pos+5 < self.scrn_height:
             down = (x_pos, y_pos+5)
             ret.append(down)
         return ret
+
+    def reconfirm_cell_values_per_sprite(self, sprites):
+        """
+        Takes a sprite list and affirms that the values
+        in the sprite rect area are blocked
+        sprites (pygame.sprite.group)
+        """ #change_cells_to(self, x_pos, y_pos, rect_area, value):
+        for sprite in sprites:
+            self.change_cells_to(sprite.rect.x,
+                                 sprite.rect.y,
+                                 sprite.rect,
+                                 1)

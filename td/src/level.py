@@ -30,6 +30,7 @@ class Level:
         self.buttons = pygame.sprite.Group()
         self.lives = lives
         self.path = self.pathfinder.calc_path(self.start, self.end)
+        self.two_sec_timer = 0
 
     def update(self, current_time):
         """
@@ -42,6 +43,17 @@ class Level:
         self.projectiles.update()
         self.wave.update(current_time, self)
         self.highlights.update()
+        self.timed_updates(current_time)
+
+    def timed_updates(self, current_time):
+        """
+        Call timed, repeating updates here
+            that should not fire every frame
+        """
+        self.two_sec_timer += current_time
+        if self.two_sec_timer >= 2000:
+            self.two_sec_timer = 0
+            self.cells.reconfirm_cell_values_per_sprite(self.towers)
 
     def initialize_sprites(self):
         """

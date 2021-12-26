@@ -1,4 +1,5 @@
 from sprites.enemy import Enemy
+from global_values import ENEMY_SPAWN_LOCATION
 
 class Wave:
     """
@@ -27,6 +28,9 @@ class Wave:
         if current_time - self.last_spawn > self.cooldown:
             self.last_spawn = current_time
             if self.enemies_per_wave >= self.enemies_spawned:
-                gandalf = Enemy(self.pos_x, self.pos_y, "gandalf.png", 20, level.path)
+                gandalf = Enemy(ENEMY_SPAWN_LOCATION[0],
+                                ENEMY_SPAWN_LOCATION[1],
+                                "gandalf.png",
+                                20, level.path)
                 level.enemies.add(gandalf)
                 level.initialize_sprites()

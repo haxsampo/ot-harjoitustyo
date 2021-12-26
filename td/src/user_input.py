@@ -2,7 +2,7 @@ import pygame
 from inspect import signature
 from sprites.tower import Tower
 from tower_values import tower1
-from global_values import K_ESCAPE, K_p, K_1, K_g
+from global_values import K_ESCAPE, K_p, K_1, K_g, K_2, SCREEN_WIDTH, SCREEN_HEIGHT
 
 class UserInput:
     """
@@ -70,7 +70,11 @@ class UserInput:
 
     def build_tower(self, event_x, event_y, level):
         """
-        Checks whether new tower fits in
+        Checks whether new tower fits in by checking
+            if cell values were changed, would enemies still have path
+            would tower be still in bounds
+            would the sprite not overlap buttons, enviro, or enemies
+            if yes
         Builds a tower on given level, given coords
         Updates enemy paths
         Updates level level.path
@@ -80,11 +84,15 @@ class UserInput:
         twr_y = int(event_y - (event_y % 5))
         tmp_rect = pygame.Rect(event_x, event_y, tower1['size_x'], tower1['size_y'])
         twr_in_bounds = level.cells.tower_in_bounds(event_x, event_y, tmp_rect)
+        error = ""
         if twr_in_bounds:
             twr_fits = level.cells.tower_fits(event_x, event_y, tmp_rect)
             spritegroups = [level.environment, level.enemies, level.buttons]
             sprites_overlap = self._spritegroup_overlap(tmp_rect, spritegroups)
-            if twr_fits and not sprites_overlap:
+            level.cells.change_cells_to(twr_x, twr_y, tmp_rect, 1)
+            path_exists = level.pathfinder.calc_path(level.start, level.end)
+            level.cells.change_cells_to(twr_x, twr_y, tmp_rect, 0)
+            if twr_fits and not sprites_overlap and path_exists:
                 level.cells.change_cells_to(event_x, event_y, tmp_rect, 1)
                 tower = Tower(twr_x, twr_y,
                               tower1['img_name'],
@@ -96,15 +104,18 @@ class UserInput:
                 level.towers.add(tower)
                 level.initialize_sprites()
                 level.pathfinder.update_paths(level.enemies, level.end)
-                path_exists = level.pathfinder.calc_path(level.start, level.end)
-                if path_exists:
-                    level.path = path_exists
-                else:
-                    print("tower would block path")
+                level.path = path_exists
             else:
-                print("tower doesn't fit :(")
+                if not twr_fits:
+                    error += "- tower doesn't fit -"
+                if sprites_overlap:
+                    error += "-sprites overlap-"
+                if not path_exists:
+                    error += "path doesn't exist"
         else:
-            print("tower not in bounds :|")
+            error += "-tower not in bounds or -"
+        if len(error) > 0:
+            print(error)
         tmp_rect = None
 
     def rect_overlap(self, rect, sprite_group):
