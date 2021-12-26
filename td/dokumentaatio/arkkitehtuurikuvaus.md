@@ -35,7 +35,7 @@ nimi;pisteet
 
 Kuvataan toimintalogiikkaa hieman sekvenssikaaviolla:
 
-![sekvenssi](./td/dokumentaatio/save_sequence.png)
+![sekvenssi](https://github.com/haxsampo/ot-harjoitustyo/blob/master/td/dokumentaatio/arkkitehtuuri.png)
 
 
 ## Ohjelman rakenteeseen jääneet heikkoudet
