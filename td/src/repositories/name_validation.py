@@ -17,7 +17,6 @@ class NameValidator:
         Args:
         name_str (string):
         """
-        print("name_str alussa",name_str)
         if len(name_str) == 0:
             return self.name_randomizer()
         if name_str.isalpha():
@@ -25,7 +24,6 @@ class NameValidator:
         rectified_name = re.sub('[^A-Za-z]+', '', name_str)
         if len(rectified_name) == 0:
             return self.name_randomizer()
-        print("rected: ", rectified_name)
         return rectified_name
 
     def name_randomizer(self):
@@ -34,4 +32,4 @@ class NameValidator:
         """
         name1 = random.choice(random_names_1)
         name2 = random.choice(random_names_2)
-        return(name1+"-"+name2)
+        return name1+"-"+name2

@@ -1,5 +1,8 @@
 import pygame
 from global_values import SCREEN_WIDTH, SCREEN_HEIGHT
+from sprites.button import Button
+from sprites.base import Base
+from sprites.highlight import Highlight
 
 class Level:
     """
@@ -27,6 +30,20 @@ class Level:
         self.lives = lives
         self.path = self.pathfinder.calc_path(self.start, self.end)
         self.two_sec_timer = 0
+
+    def level_initialization(self, butt_funcs):
+        """
+        Gives level buttons, base etc
+        Called in index
+        args:
+        butt_funcs (class ButtonFunctionHolder)
+        """
+        butt = Button(10, 530, "tykki_nappi.png", 70, 70, butt_funcs.flip_one)
+        self.buttons.add(butt)
+        base = Base(SCREEN_WIDTH - 100, SCREEN_HEIGHT/2, 96, 51, "base96x51.png")
+        self.environment.add(base)
+        highlight = Highlight(1, 1)
+        self.highlights.add(highlight)
 
     def update(self, current_time):
         """

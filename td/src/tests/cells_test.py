@@ -114,18 +114,27 @@ class TestCells(unittest.TestCase):
         self.assertEqual(len(neibs2), 4)
 
     def test_coords_to_cell_values(self):
+        """
+        .
+        """
         cells = Cells(0)
         x_1, y_2 = cells.coords_to_cell_values(0, 0)
         self.assertEqual(x_1, 0)
         self.assertEqual(y_2, 0)
 
     def test_coords_to_cell_values2(self):
+        """
+        .
+        """
         cells = Cells(0)
         x_1, y_2 = cells.coords_to_cell_values(-1, -1)
         self.assertEqual(x_1, 0)
         self.assertEqual(y_2, 0)
 
     def test_coords_to_cell_values3(self):
+        """
+        .
+        """
         cells = Cells(0)
         more = SCREEN_WIDTH + SCREEN_HEIGHT
         x_1, y_2 = cells.coords_to_cell_values(more, more)

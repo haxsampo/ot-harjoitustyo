@@ -53,5 +53,4 @@ class Projectile(pygame.sprite.Sprite):
         '''
         if math.hypot(self.rect.x - self.target.rect.x, self.rect.y - self.target.rect.y) < (self.enemy_size/2):
             self.target.take_damage(self.dmg)
-            print("colli detect kill")
             self.kill()

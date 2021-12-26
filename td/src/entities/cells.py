@@ -1,4 +1,3 @@
-from pf.cell import Cell
 from global_values import SCREEN_HEIGHT, SCREEN_WIDTH, CELL_SIZE
 
 class Cells:

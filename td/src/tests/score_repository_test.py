@@ -15,7 +15,6 @@ class TestScoreRepository(unittest.TestCase):
 
     def tearDown(self):
         pass
-        #poista csv
     
     def csv_population(self):
         """
