@@ -11,7 +11,7 @@ from entities.menu import Menu
 from sprites.button import Button
 from sprites.base import Base
 from sprites.highlight import Highlight
-from global_values import SCREEN_WIDTH, SCREEN_HEIGHT, CELL_SIZE, ENEMY_KILL_SCORE, POINTS_PER_FRAME, LIVES
+from global_values import SCREEN_WIDTH, SCREEN_HEIGHT, ENEMY_KILL_SCORE, POINTS_PER_FRAME, LIVES
 from pf.pathfinding import Pathfind
 from pf.astar import Astar
 from ui.button_functions import ButtonFunctionHolder

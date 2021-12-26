@@ -71,6 +71,11 @@ class UserInput:
             self.build_tower(event_x, event_y, scene_obj)
 
     def _gather_tower_build_errors(self, errs_list):
+        """
+        (bool, str)
+        Pass tuples so that if you want the errormsg to show up,
+            the bool should be True
+        """
         error = ""
         for tuple in errs_list:
             if tuple[0]:
@@ -90,40 +95,49 @@ class UserInput:
         Updates level level.path
         Args:
         """
-        errors = []
         twr_x = int(event_x - (event_x % 5))
         twr_y = int(event_y - (event_y % 5))
         tmp_rect = pygame.Rect(event_x, event_y, tower1['size_x'], tower1['size_y'])
-        twr_in_bounds = level.cells.tower_in_bounds(event_x, event_y, tmp_rect)
         dicks = {'event_x':event_x,
                  'event_y':event_y,
                  'tmp_rect':tmp_rect,
-                 'level':level}
+                 'level':level,
+                 'twr_x':twr_x,
+                 'twr_y':twr_y}
+        can_build, path_exists = self._build_validation(dicks)
+        if can_build:
+            self._actually_build_tower(self.current_tower,
+                                       level, path_exists,
+                                       twr_x, twr_y,
+                                       (event_x, event_y),
+                                       tmp_rect)
+        tmp_rect = None
+
+    def _build_validation(self, dict):
+        level = dict['level']
+        errors = []
+        twr_in_bounds = level.cells.tower_in_bounds(dict['event_x'],
+                                                    dict['event_y'],
+                                                    dict['tmp_rect'])
         errors.append((not twr_in_bounds, "tower not in bounds"))
         if twr_in_bounds:
-            twr_fits = level.cells.tower_fits(event_x, event_y, tmp_rect)
+            twr_fits = level.cells.tower_fits(dict['event_x'], dict['event_y'], dict['tmp_rect'])
             spritegroups = [level.environment, level.enemies, level.buttons]
-            sprites_overlap = self._spritegroup_overlap(tmp_rect, spritegroups)
-            level.cells.change_cells_to(twr_x, twr_y, tmp_rect, 1)
-            path_exists = level.pathfinder.calc_path(level.start, level.end)
-            level.cells.change_cells_to(twr_x, twr_y, tmp_rect, 0)
-            errors.append((not path_exists, "would block path"))
+            sprites_overlap = self._spritegroup_overlap(dict['tmp_rect'], spritegroups)
+            path_exists, errors = self._path_check(dict, errors)
             errors.append((sprites_overlap, "sprites overlap"))
             errors.append((not twr_fits, "tower doesn't fit"))
             if twr_fits and not sprites_overlap and path_exists:
-                self._actually_build_tower(self.current_tower,
-                                           level, path_exists,
-                                           twr_x, twr_y,
-                                           (event_x, event_y), 
-                                           tmp_rect)
+                return True, path_exists
         self._gather_tower_build_errors(errors)
-        tmp_rect = None
+        return False, False
 
-    def _can_build(self, dict):
-        errors = []
-        twr_in_bounds = dict['level'].cells.tower_in_bounds(dict['event_x'],
-                                                            dict['event_y'],
-                                                            dict['tmp_rect'])
+    def _path_check(self, dict, errors):
+        dict['level'].cells.change_cells_to(dict['twr_x'], dict['twr_y'], dict['tmp_rect'], 1)
+        path_exists = dict['level'].pathfinder.calc_path(dict['level'].start, dict['level'].end)
+        dict['level'].cells.change_cells_to(dict['twr_x'], dict['twr_y'], dict['tmp_rect'], 0)
+        errors.append((not path_exists, "would block path"))
+        return path_exists, errors
 
     def _actually_build_tower(self, cur_tower, level,
                               path_exists, twr_x, twr_y, event_tuple, tmp_rect):

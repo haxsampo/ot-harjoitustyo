@@ -17,14 +17,15 @@ class NameValidator:
         Args:
         name_str (string):
         """
+        print("name_str alussa",name_str)
         if len(name_str) == 0:
             return self.name_randomizer()
         if name_str.isalpha():
             return name_str
-        regex = re.compile('[a-zA-Z]')
-        rectified_name = regex.sub("", name_str)
+        rectified_name = re.sub('[^A-Za-z]+', '', name_str)
         if len(rectified_name) == 0:
             return self.name_randomizer()
+        print("rected: ", rectified_name)
         return rectified_name
 
     def name_randomizer(self):
