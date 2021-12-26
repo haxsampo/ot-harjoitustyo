@@ -31,7 +31,7 @@ class GameLoop:
             elif self.scene == "menu":
                 self.menu_scene()
             if not self.running:
-                pygame.quit() # pylint: disable=no-member
+                pygame.quit()
                 exit()
 
     def menu_scene(self):

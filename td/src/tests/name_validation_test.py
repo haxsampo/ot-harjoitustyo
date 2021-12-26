@@ -15,7 +15,7 @@ class TestNameValidator(unittest.TestCase):
         a is added so that string_validation doesn't add a random name from the random
             name generator
         """
-        char_list = ["%","2","&", ".", "_", "", "f9f", "%","(","/","(#"]
+        char_list = ["%", "2", "&", ".", "_", "", "f9f", "%", "(", "/", "(#"]
         test_str = ""
         for i in range(1,10):
             index = random.randint(0, len(char_list)-1)
@@ -24,7 +24,7 @@ class TestNameValidator(unittest.TestCase):
         self.assertEqual(test_str.isalpha(), False)
         rectified = self.validator.string_validation(test_str)
         self.assertEqual(rectified.isalpha(), True)
-    
+
     def test_name_randomizer(self):
         """
         if name lists are removed from config file, this will fail

@@ -19,6 +19,10 @@
 |10/12  | 4    | päävalikko oli edelleen hankala, nyt toiminee |
 |12/12  | 4    | pathfinding kamaa |
 |13/12  | 2    | byrokratiaa
+|21/12  | 5    |
+|23/12  | 6    | 
+|25/12  | 7    | cubblin kanssa tappelemista & pathfinding tiivistelyä
+|26/12  | 10   | pathfinding siistmistä, testejä
 
-Total   | ~44  |
+Total   | ~72  |
 

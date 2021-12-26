@@ -20,7 +20,7 @@ from ui.notifications import Notification
 from config import SCORES_FILE
 from repositories.score_repository import ScoreRepository
 
-pygame.init() # pylint: disable=no-member
+pygame.init()
 
 def main():
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -47,7 +47,7 @@ def main():
     menu = Menu(hiscore, repo)
     menu.menu_initialization(butt_funcs)
 
-    level.initialize_sprites() # pylint: disable=protected-access
+    level.initialize_sprites()
     renderer = Renderer(screen, level, menu)
     game_loop = GameLoop(clock, renderer, level, user_input, notif, menu, repo)
     game_loop.start()

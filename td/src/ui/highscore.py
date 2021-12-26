@@ -16,7 +16,6 @@ class Highscore:
         self.surf = pygame.Surface((size_x, size_y))
         self.font = pygame.font.SysFont(None, 24)
         self.text = self.font.render('kakkapenis', True, (130, 0, 130))
-        #self.textpos = self.text.get_rect(centerx=SCREEN_WIDTH/2+100, y=50)
 
     def score_render(self, display):
         """
