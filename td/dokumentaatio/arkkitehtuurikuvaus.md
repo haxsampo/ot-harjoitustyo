@@ -42,3 +42,4 @@ Kuvataan toimintalogiikkaa hieman sekvenssikaaviolla:
 - Menu ja level olisi luultavasti abstraktoitavissa skeneksi, jolla on omat renderöitävät objektinsa ja kumpikin passaisi user_inputille tapahtuvat eventit.
 - index tulisi purkaa 
 - pelin päätyttyä olisi ideaalia pystyä palaamaan menuun tai aloittamaan uusi peli
+- vastustajia ja vastustajien instantioimista olisi pitänyt abstraktoida lisää niin, että uusien erilaisten vastustajien lisääminen olisi helpompaa. tornien kohdalla tätä on hieman alustettu.
