@@ -11,6 +11,9 @@ class StubFuncHold:
 class TestButton(unittest.TestCase):
 
     def test_run_func(self):
+        """
+        Test that the given function is fired correctly
+        """
         stubber = StubFuncHold()
         butt = Button(5, 5, "70x70_button.png", 10, 10, stubber.function_for_testing, "tester")
         dic = {'x_value':120, 'y_value':30, 'butt':butt}
