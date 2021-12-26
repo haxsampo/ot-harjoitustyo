@@ -1,7 +1,6 @@
 from pathlib import Path
 import csv
-import re
-from name_validation import NameValidator
+from repositories.name_validation import NameValidator
 
 class ScoreRepository:
     """

@@ -1,5 +1,5 @@
 import pygame
-from load_image import load_image
+from services.load_image import load_image
 
 class Highlight(pygame.sprite.Sprite):
     '''

@@ -8,5 +8,5 @@ def load_image(filename):
     Helps with giving path to images
     """
     return pygame.image.load(
-        os.path.join(dir, "assets", filename)
+        os.path.join(dir, "..", "assets", filename)
     )

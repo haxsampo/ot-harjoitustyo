@@ -1,6 +1,6 @@
 import math
 import pygame
-from load_image import load_image
+from services.load_image import load_image
 from sprites.projectile import Projectile
 
 class Tower(pygame.sprite.Sprite):

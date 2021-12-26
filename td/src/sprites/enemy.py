@@ -1,6 +1,6 @@
 import pygame
 import math
-from load_image import load_image
+from services.load_image import load_image
 
 
 class Enemy(pygame.sprite.Sprite):

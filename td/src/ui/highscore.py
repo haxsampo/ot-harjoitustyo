@@ -6,6 +6,7 @@ from global_values import SCREEN_WIDTH
 
 class Highscore:
     """
+    Displays the highscore values in the menu screen
     Communicates with db_comms
     """
     def __init__(self, size_x, size_y):

@@ -3,7 +3,7 @@ Button UI element
 Functions held in button_functions.py
 """
 import pygame
-from load_image import load_image
+from services.load_image import load_image
 
 class Button(pygame.sprite.Sprite):
     """
