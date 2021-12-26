@@ -3,7 +3,7 @@
 ## Rakenne
 Ohjelman kansiorakenne ja arkkitehtuuri toimii suurinpiirtein seuraavalla tavalla
 
-![arkkitehtuuri](./td/dokumentaatio/arkkitehtuuri.png)
+![arkkitehtuuri](https://github.com/haxsampo/ot-harjoitustyo/blob/master/td/dokumentaatio/arkkitehtuuri.png)
 
 ui sisältää käyttöliittymään liittyviä elementtejä; services sisältää sovelluslogiikkaa; repositories sisältää sovelluksen tietojen tallentamiseen liittyvää koodia; entities sisältää sovelluksen entiteeteiksi miellettäviä luokkia, jotka eivät ole välttämättä visuaalisia; sprites on pygame.sprite:n periviä entiteettejä; pf sisältää reitinetsintään liittyvän koodin ja luokat
 
@@ -35,7 +35,7 @@ nimi;pisteet
 
 Kuvataan toimintalogiikkaa hieman sekvenssikaaviolla:
 
-![sekvenssi](https://github.com/haxsampo/ot-harjoitustyo/blob/master/td/dokumentaatio/arkkitehtuuri.png)
+![sekvenssi](https://github.com/haxsampo/ot-harjoitustyo/blob/master/td/dokumentaatio/save_sequence.png)
 
 
 ## Ohjelman rakenteeseen jääneet heikkoudet
